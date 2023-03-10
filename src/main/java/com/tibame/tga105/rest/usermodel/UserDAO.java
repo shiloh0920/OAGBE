@@ -1,4 +1,4 @@
-package com.tibame.tga105.rest.restorderstatusmodel;
+package com.tibame.tga105.rest.usermodel;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,16 +17,15 @@ import javax.sql.DataSource;
 
 import com.tibame.tga105.rest.restordermodel.RestOrderVO;
 
-public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
-	
+public class UserDAO implements UserDAO_interface{
+
 	String driver = "com.mysql.cj.jdbc.Driver";
 
 	String url = "jdbc:mysql://localhost:3306/coffeebean?serverTimezone=Asia/Taipei";
 
-	String userid = "root";
+	String memid = "root";
 
 	String passwd = "password";
-	
 	
 //	private static DataSource ds = null;
 //	static {
@@ -39,22 +38,22 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 //	}
 
 	private static final String INSERT_STMT = 
-		"INSERT INTO rest_order_status (order_status) VALUES ( ?)";
+		"INSERT INTO user (user_email,user_pwd,user_name,user_nickname,user_address,user_tel,user_vip_level_id,user_datetime,user_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-		"SELECT order_status_id,order_status FROM rest_order_status order by order_status_id";
+		"SELECT user_id,user_email,user_pwd,user_name,user_nickname,user_address,user_tel,user_vip_level_id,user_datetime,user_status FROM user order by user_id";
 	private static final String GET_ONE_STMT = 
-		"SELECT order_status_id,order_status FROM rest_order_status where order_status_id = ?";
-	private static final String DELETE_RESTORDERSTATUS = 
-		"DELETE FROM rest_order_status where order_status_id = ?";
+		"SELECT user_id,user_email,user_pwd,user_name,user_nickname,user_address,user_tel,user_vip_level_id,user_datetime,user_status FROM user where user_id = ?";
+	private static final String DELETE_USER = 
+		"DELETE FROM user where user_id = ?";
 	private static final String UPDATE = 
-		"UPDATE rest_order_status set order_status=? where order_status_id = ?";
+		"UPDATE user set user_email=?, user_pwd=?, user_name=?, user_nickname=?, user_address=?, user_tel=?, user_vip_level_id=?, user_datetime=? ,user_status=? where user_id = ?";
 
-	private static final String GET_Restorders_ByOrderstatusid_STMT = "SELECT order_id,user_id,rest_id,orderstatus_id,order_time,order_memo FROM rest_order where order_status_id = ? order by order_id";
+	private static final String GET_Restorders_ByUserid_STMT = "SELECT order_id,user_id,rest_id,orderstatus_id,order_time,order_memo FROM rest_order where user_id = ? order by order_id";
 	private static final String DELETE_RESTORDERs = "DELETE FROM rest_order where order_status_id = ?";
 	
 	
 	@Override
-	public void insert(RestOrderStatusVO restOrderStatusVO) {
+	public void insert(UserVO userVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -67,12 +66,20 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = DriverManager.getConnection(url, memid, passwd);
 			
 //			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setString(1, restOrderStatusVO.getOrderstatus());
+			pstmt.setString(1, userVO.getUseremail());
+			pstmt.setString(2, userVO.getUserpwd());
+			pstmt.setString(3, userVO.getUsername());
+			pstmt.setString(4, userVO.getUsernickname());
+			pstmt.setString(5, userVO.getUseraddress());
+			pstmt.setString(6, userVO.getUsertel());
+			pstmt.setInt(7, userVO.getUserviplevelid());
+			pstmt.setDate(8, userVO.getUserdatetime());
+			pstmt.setBoolean(9, userVO.getUserstatus());
 
 			pstmt.executeUpdate();
 
@@ -101,7 +108,7 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 	}
 
 	@Override
-	public void update(RestOrderStatusVO restOrderStatusVO) {
+	public void update(UserVO userVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -114,15 +121,22 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = DriverManager.getConnection(url, memid, passwd);
+			
 			
 //			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, restOrderStatusVO.getOrderstatus());
-			pstmt.setInt(2, restOrderStatusVO.getOrderstatusid());
-		
-
+			pstmt.setString(1, userVO.getUseremail());
+			pstmt.setString(2, userVO.getUserpwd());
+			pstmt.setString(3, userVO.getUsername());
+			pstmt.setString(4, userVO.getUsernickname());
+			pstmt.setString(5, userVO.getUseraddress());
+			pstmt.setString(6, userVO.getUsertel());
+			pstmt.setInt(7, userVO.getUserviplevelid());
+			pstmt.setDate(8, userVO.getUserdatetime());
+			pstmt.setBoolean(9, userVO.getUserstatus());
+			pstmt.setInt(10, userVO.getUserid());
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -150,7 +164,7 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 	}
 
 	@Override
-	public void delete(Integer orderstatusid) {
+	public void delete(Integer userid) {
 		int updateCount_RESTORDERs =0 ;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -163,24 +177,23 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			con = DriverManager.getConnection(url, userid, passwd);
-			
+			con = DriverManager.getConnection(url, memid, passwd);
 			
 //			con = ds.getConnection();
 			con.setAutoCommit(false);
 			
 			pstmt = con.prepareStatement(DELETE_RESTORDERs);
-			pstmt.setInt(1, orderstatusid);
+			pstmt.setInt(1, userid);
 			updateCount_RESTORDERs = pstmt.executeUpdate();
 			
 			
-			pstmt = con.prepareStatement(DELETE_RESTORDERSTATUS);
-			pstmt.setInt(1, orderstatusid);
+			pstmt = con.prepareStatement(DELETE_USER);
+			pstmt.setInt(1, userid);
 			pstmt.executeUpdate();
 			
 			con.commit();
 			con.setAutoCommit(true);
-			System.out.println("刪除訂單狀態編號" + orderstatusid + "時,共有訂單" + updateCount_RESTORDERs
+			System.out.println("刪除會員編號" + userid + "時,共有訂單" + updateCount_RESTORDERs
 					+ "幾筆同時被刪除");
 
 			// Handle any driver errors
@@ -208,37 +221,41 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 	}
 
 	@Override
-	public RestOrderStatusVO findByPrimaryKey(Integer orderstatusid) {
+	public UserVO findByPrimaryKey(Integer userid) {
 
-		RestOrderStatusVO restOrderStatusVO = null;
+		UserVO userVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
 		try {
-
-			
 			try {
 				Class.forName(driver);
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			con = DriverManager.getConnection(url, userid, passwd);
-			
-			
+			con = DriverManager.getConnection(url, memid, passwd);
 //			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
-			pstmt.setInt(1, orderstatusid);
+			pstmt.setInt(1, userid);
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// dishVo 也稱為 Domain objects
-				restOrderStatusVO = new RestOrderStatusVO();
-				restOrderStatusVO.setOrderstatusid(rs.getInt("order_status_id"));
-				restOrderStatusVO.setOrderstatus(rs.getString("order_status"));
+				// userVo 也稱為 Domain objects
+				userVO = new UserVO();
+				userVO.setUserid(rs.getInt("user_id"));
+				userVO.setUseremail(rs.getString("user_email"));
+				userVO.setUserpwd(rs.getString("user_pwd"));
+				userVO.setUsername(rs.getString("user_name"));
+				userVO.setUsernickname(rs.getString("user_nickname"));
+				userVO.setUseraddress(rs.getString("user_address"));
+				userVO.setUsertel(rs.getString("user_tel"));
+				userVO.setUserviplevelid(rs.getInt("user_vip_level_id"));
+				userVO.setUserdatetime(rs.getDate("user_datetime"));
+				userVO.setUserstatus(rs.getBoolean("user_status"));
 			
 			}
 
@@ -270,29 +287,26 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 				}
 			}
 		}
-		return restOrderStatusVO;
+		return userVO;
 	}
 
 	@Override
-	public List<RestOrderStatusVO> getAll() {
-		List<RestOrderStatusVO> list = new ArrayList<RestOrderStatusVO>();
-		RestOrderStatusVO restOrderStatusVO = null;
+	public List<UserVO> getAll() {
+		List<UserVO> list = new ArrayList<UserVO>();
+		UserVO userVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
 		try {
-
 			try {
 				Class.forName(driver);
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			con = DriverManager.getConnection(url, userid, passwd);
-			
-			
+			con = DriverManager.getConnection(url, memid, passwd);
 //			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
@@ -301,11 +315,19 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 
 			while (rs.next()) {
 				// dishVO 也稱為 Domain objects
-				restOrderStatusVO = new RestOrderStatusVO();
-				restOrderStatusVO.setOrderstatusid(rs.getInt("order_status_id"));
-				restOrderStatusVO.setOrderstatus(rs.getString("order_status"));
+				userVO = new UserVO();
+				userVO.setUserid(rs.getInt("user_id"));
+				userVO.setUseremail(rs.getString("user_email"));
+				userVO.setUserpwd(rs.getString("user_pwd"));
+				userVO.setUsername(rs.getString("user_name"));
+				userVO.setUsernickname(rs.getString("user_nickname"));
+				userVO.setUseraddress(rs.getString("user_address"));
+				userVO.setUsertel(rs.getString("user_tel"));
+				userVO.setUserviplevelid(rs.getInt("user_vip_level_id"));
+				userVO.setUserdatetime(rs.getDate("user_datetime"));
+				userVO.setUserstatus(rs.getBoolean("user_status"));
 		
-				list.add(restOrderStatusVO); // Store the row in the list
+				list.add(userVO); // Store the row in the list
 			}
 
 			// Handle any driver errors
@@ -341,7 +363,7 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 
 	
 	@Override
-	public Set<RestOrderVO> getRestordersByOrderstatusid(Integer orderstatusid) {
+	public Set<RestOrderVO> getRestordersByUserid(Integer userid) {
 		Set<RestOrderVO> set = new LinkedHashSet<RestOrderVO>();
 		RestOrderVO restOrderVO = null;
 	
@@ -350,19 +372,16 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 		ResultSet rs = null;
 	
 		try {
-	
 			try {
 				Class.forName(driver);
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			con = DriverManager.getConnection(url, userid, passwd);
-			
-			
+			con = DriverManager.getConnection(url, memid, passwd);
 //			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_Restorders_ByOrderstatusid_STMT);
-			pstmt.setInt(1, orderstatusid);
+			pstmt = con.prepareStatement(GET_Restorders_ByUserid_STMT);
+			pstmt.setInt(1, userid);
 			rs = pstmt.executeQuery();
 	
 			while (rs.next()) {
@@ -406,5 +425,6 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 		}
 		return set;
 	}
+
 
 }

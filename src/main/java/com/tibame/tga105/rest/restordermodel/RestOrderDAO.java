@@ -1,6 +1,7 @@
 package com.tibame.tga105.rest.restordermodel;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,15 +21,23 @@ import com.tibame.tga105.rest.restorderlistmodel.RestOrderListVO;
 
 public class RestOrderDAO implements RestOrderDAO_interface {
 
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+	String driver = "com.mysql.cj.jdbc.Driver";
+
+	String url = "jdbc:mysql://localhost:3306/coffeebean?serverTimezone=Asia/Taipei";
+
+	String userid = "root";
+
+	String passwd = "password";
+	
+//	private static DataSource ds = null;
+//	static {
+//		try {
+//			Context ctx = new InitialContext();
+//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+//		} catch (NamingException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	private static final String INSERT_STMT = 
 		"INSERT INTO rest_order (user_id,rest_id,order_status_id,order_time,order_memo) VALUES (?, ?, ?, ?, ?)";
@@ -52,7 +61,16 @@ public class RestOrderDAO implements RestOrderDAO_interface {
 		int next_order_id = -1;
 		try {
 
-			con = ds.getConnection();
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+			
+//			con = ds.getConnection();
 			String[] col = { "order_id" };
 			pstmt = con.prepareStatement(INSERT_STMT, col);
 			
@@ -102,7 +120,16 @@ public class RestOrderDAO implements RestOrderDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+			
+//			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setInt(1, restOrderVO.getUserid());
@@ -146,7 +173,15 @@ public class RestOrderDAO implements RestOrderDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+//			con = ds.getConnection();
 			con.setAutoCommit(false);
 
 			pstmt = con.prepareStatement(DELETE_RESTORDERLISTs);
@@ -195,7 +230,16 @@ public class RestOrderDAO implements RestOrderDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+			
+//			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, orderid);
@@ -255,7 +299,16 @@ public class RestOrderDAO implements RestOrderDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+			
+//			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 			
@@ -340,7 +393,16 @@ public class RestOrderDAO implements RestOrderDAO_interface {
 	
 		try {
 	
-			con = ds.getConnection();
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+			
+//			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_RestOrderLists_ByOrderid_STMT);
 			pstmt.setInt(1, orderid);
 			rs = pstmt.executeQuery();
@@ -393,7 +455,16 @@ public class RestOrderDAO implements RestOrderDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+			
+//			con = ds.getConnection();
 			// 1●設定於 pstm.executeUpdate()之前
     		con.setAutoCommit(false);
 			

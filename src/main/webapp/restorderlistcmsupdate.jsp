@@ -1,20 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.*"%>
-<%@ page import="com.tibame.tga105.rest.restmodel.*"%>
-
+<%@ page import="com.tibame.tga105.rest.restorderlistmodel.*"%>
 
 <%
-RestService restSvc = new RestService();
-List<RestVO> list = restSvc.getAll();
-pageContext.setAttribute("list", list);
+RestOrderListVO restOrderListVO = (RestOrderListVO) request.getAttribute("restOrderListVO");
 %>
-
-<%
-   RestVO restVO = (RestVO) request.getAttribute("restVO");
-%>
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -23,7 +15,7 @@ pageContext.setAttribute("list", list);
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors" />
 <meta name="generator" content="Hugo 0.108.0" />
-<title>OGABE|點餐首頁</title>
+<title>OGABE|點餐後台</title>
 <link href="dist/css/bootstrap.min.css" rel="stylesheet" />
 <link href="dist/css/carousel.css" rel="stylesheet" />
 <link href="dist/css/my.css" rel="stylesheet" />
@@ -83,7 +75,8 @@ pageContext.setAttribute("list", list);
 						<li class="nav-item"><a class="nav-link" aria-current="page"
 							href="index.html">小遊戲</a></li>
 						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="index.html">登入</a> <!--active是調整成高亮
+							aria-current="page" href="index.html">登入</a>
+						<!--active是調整成高亮
                 --></li>
 						<!-- Button trigger modal -->
 						<button type="button" class="btn btn-primary"
@@ -115,18 +108,18 @@ pageContext.setAttribute("list", list);
 						<form class="">
 							<div class="form-floating mb-3">
 								<input type="email" class="form-control rounded-3"
-									id="floatingInput" placeholder="name@example.com" /> <label
-									for="floatingInput">Email address</label>
+									id="floatingInput" placeholder="name@example.com" />
+								<label for="floatingInput">Email address</label>
 							</div>
 							<div class="form-floating mb-3">
 								<input type="password" class="form-control rounded-3"
-									id="floatingPassword" placeholder="Password" /> <label
-									for="floatingPassword">Password</label>
+									id="floatingPassword" placeholder="Password" />
+								<label for="floatingPassword">Password</label>
 							</div>
 							<button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary"
 								type="submit">Sign up</button>
-							<small class="text-muted">By clicking Sign up, you agree
-								to the terms of use.</small>
+							<small class="text-muted">By clicking
+								Sign up, you agree to the terms of use.</small>
 							<hr class="my-4" />
 							<h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
 							<button class="w-100 py-2 mb-2 btn btn-outline-dark rounded-3"
@@ -158,28 +151,84 @@ pageContext.setAttribute("list", list);
 		</div>
 		<!-- model end -->
 		<div class="container-fluid pt-5 px-5">
-			<h1 class="h_center">餐廳選擇</h1>
+			<h1 class="h_center">點餐系統後台</h1>
 		</div>
 		<hr />
-		<c:forEach var="restVO" items="${list}">
-		<div class="row featurette h_center">			
-				<div class="card mb-3" style="max-width: 540px;">
-					<div class="row g-0">
-						<div class="col-md-4 h_center">
-							<img class="figure-img img-fluid rounded"
-								src="RestServlet?restid=${restVO.restid}">
-						</div>
-						<div class="col-md-8">
-							<div class="card-body text-center">
-								<h5 class="card-title">餐廳: ${restVO.restname}</h5>
-								<p class="card-text">地址: ${restVO.restaddress}</p>
-								<a class="btn rest-btn-primary" href="dishshop2.jsp?restid=${restVO.restid}">線上點餐</a>
-							</div>
-						</div>
+		<h2 class="h_center">訂單明細管理</h2>
+
+		<h3 class="h_center">修改訂單明細:</h3>
+		<div class="h_center">
+
+
+			<FORM METHOD="post" ACTION="restOrderList.do" name="form1">
+				<div class="mb-3">
+					<div class="rest_dish_select_qty">
+						訂單明細編號:<font color=red><b> * </b></font>${param.orderlistid}</div>
+
+				</div>
+
+				<jsp:useBean id="restOrderSvc" scope="page"
+					class="com.tibame.tga105.rest.restordermodel.RestOrderService" />
+				<div class="mb-3">
+					<div class="rest_dish_select_qty">
+						訂單編號: <label for="InputRestorderid" class="form-label"> <select
+							class="form-select" size="1" name="orderid" id="InputRestorderid">
+								<c:forEach var="restOrderVO" items="${restOrderSvc.all}">
+									<option value="${restOrderVO.orderid}"
+										${(param.orderid==restOrderVO.orderid)? 'selected':'' }>${restOrderVO.orderid}
+								</c:forEach>
+						</select></label>
 					</div>
 				</div>
-			</c:forEach>
+				<jsp:useBean id="dishSvc" scope="page"
+					class="com.tibame.tga105.rest.dishmodel.DishService" />
+				<div class="mb-3">
+					<div class="rest_dish_select_qty">
+						餐點: <label for="InputRestorderid1" class="form-label"> <select
+							class="form-select" size="1" name="dishid" id="InputRestorderid1">
+								<c:forEach var="dishVO" items="${dishSvc.all}">
+									<option value="${dishVO.dishid}"
+										${(param.dishid==dishVO.dishid)? 'selected':'' }>${dishVO.dishname}
+								</c:forEach>
+						</select></label>
+					</div>
+				</div>
+				<div class="mb-3">
+					<div class="rest_dish_select_qty">
+						餐點價格: <label for="InputRestorderid2" class="form-label"> <input
+							type="TEXT" class="form-control" name="dishprice" size="45"
+							id="InputRestorderid2" value="${param.dishprice}" /><font>${errorMsgs.dishprice}</font>
+						</label>
+					</div>
+				</div>
+				<div class="mb-3">
+					<div class="rest_dish_select_qty">
+						餐點數量: <label for="InputRestorderid3" class="form-label"> <input
+							type="TEXT" class="form-control" name="dishqty" size="45"
+							id="InputRestorderid3" value="${param.dishqty}" /><font>${errorMsgs.dishqty}</font>
+						</label>
+					</div>
+				</div>
+
+
+
+				<br>
+				<div class="h_center">
+					<input type="hidden" name="action" value="update"> <input
+						type="hidden" name="orderlistid"
+						value="${restOrderListVO.orderlistid}"> <input
+						type="submit" class="btn btn-warning" value="送出">
+				</div>			
+			</FORM>
 		</div>
+		
+		<br>
+		<div class="h_center">
+			<!--         <a class="btn btn-outline-secondary"  href="restcmsadd.jsp">新增</a> -->
+			<a class="btn btn-outline-secondary"
+				href="restorderlistcmslistall.jsp">訂單明細管理</a>
+		</div>
+
 		<hr class="featurette-divider" />
 	</main>
 	<!-- footer -->
