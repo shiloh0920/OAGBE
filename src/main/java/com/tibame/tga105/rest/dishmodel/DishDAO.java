@@ -19,7 +19,7 @@ import com.tibame.tga105.rest.restorderlistmodel.RestOrderListVO;
 
 public class DishDAO implements DishDAO_interface {
 
-	// 這個DAO有傳圖片
+//	 這個DAO有傳圖片
 	private static DataSource ds = null;
 	static {
 		try {
