@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+    crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css"
+      crossorigin="anonymous"
+    />
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h1>Datatables</h1>
+      <button class="btn btn-reload">Reload Data</button>
+      <div class="table-responsive">
+        <table
+          class="table table-sm table-bordered table-hover"
+          id="table-data"
+        >
+          <thead>
+            <tr class="table-active">
+              <th>#</th>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Contact</th>
+              <th></th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <h2>All contact Information</h2>
+      <div class="display-data"></div>
+    </div>
+    <!-- Modal_start -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title" id="exampleModalLabel">預訂頁面</h3>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+
+                <div class="modal-body">
+                  <form>
+                    <div class="mb-3">
+                      <label for="exampleInputPassword1" class="form-label"
+                        >會員編號</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="memberId"
+                        disabled
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label"
+                        >房型名稱</label
+                      >
+                      <select
+                        class="form-select form-control"
+                        aria-label="Default select example"
+                      >
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                    </div>
+                    <div class="d-flex">
+                      <div class="mb-3 w-100 margin-r-20">
+                        <label for="">入住日期：</label>
+                        <div class="form-group">
+                          <div class="input-group date" id="date_start">
+                            <input type="text" class="form-control" id="checkInDate"/>
+                            <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mb-3 w-100 margin-l-20">
+                        <label for="">退房日期：</label>
+                        <div class="form-group">
+                          <div class="input-group date" id="date_end">
+                            <input type="text" class="form-control" />
+                            <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex">
+                      <div class="mb-3 w-100 margin-r-20">
+                        <label for="exampleInputPassword1" class="form-label"
+                          >入住人數</label
+                        >
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="exampleInputPassword1"
+                        />
+                      </div>
+                      <div class="mb-3 w-100 margin-l-20">
+                        <label for="exampleInputPassword1 " class="form-label"
+                          >寵物數量</label
+                        >
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="exampleInputPassword1"
+                        />
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label
+                        for="exampleInputPassword1"
+                        class="form-label"
+                        style="margin-top: 20px"
+                        >金額總計</label
+                      >
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="exampleInputPassword1"
+                      />
+                    </div>
+                    <div class="mb-3 form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                      />
+                      <label class="form-check-label" for="exampleCheck1"
+                        >確認上述資訊無誤!</label
+                      >
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    取消
+                  </button>
+                  <button id="success" type="button" class="btn btn-primary">
+                    送出
+                  </button>
+                </div>
+              </div>
+      </div>
+    </div>
+    <!-- Modal_end -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      var data_table = [];
+      $.extend(true, $.fn.dataTable.defaults, {
+        paging: true,
+        lengthChange: false,
+        searching: false,
+        processing: true,
+        ordering: false,
+        info: false,
+        responsive: false,
+        autoWidth: false,
+        pageLength: 5,
+        dom: '<"top"f>rtlip'
+      });
+
+      $("#table-data").DataTable({
+        ajax: function (data, callback, settings) {
+          axios
+            .get("https://jsonplaceholder.typicode.com/users")
+            .then((result) => {
+              callback({ data: result.data });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        },
+        columns: [
+          {
+            data: null,
+            render: function (data, type, row, meta) {
+              return meta.row + 1;
+            }
+          },
+          {
+            data: null,
+            render: function (data, type, row) {
+              return data.name;
+            }
+          },
+          {
+            data: null,
+            render: function (data, type, row, meta) {
+              return data.address.street;
+            }
+          },
+          {
+            data: null,
+            render: function (data, type, row, meta) {
+              return data.phone;
+            }
+          },
+          {
+            data: null,
+            render: function (data, type, row, meta) {
+              return '<button class="btn btn-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">Get All Data</button>';
+            }
+          }
+        ]
+      });
+
+      $(".btn-reload").click(function () {
+        refreshTable("#table-data");
+      });
+      $(document).on("click", ".btn-edit", function () {
+        let current_row = $(this).parents("tr");
+        if (current_row.hasClass("child")) {
+          current_row = current_row.prev();
+        }
+        let table = $("#table-data").DataTable();
+        let data = table.row(current_row).data();
+        let modal = $('#exampleModal')
+        modal.find('.modal-title').text(data.email);
+        modal.find('#memberId').val(data.name);
+
+        
+        // $(".display-data").html(
+        //   "<pre>" + JSON.stringify(data, null, 4) + "<pre>"
+        // );
+      });
+
+      const refreshTable = (tablename) => {
+        let table = $(tablename).DataTable();
+        table.ajax.reload(null, false);
+      };
+
+      const drawTable = (tablename, obj) => {
+        let xtable = $(tablename).DataTable();
+        xtable.clear();
+        xtable.rows.add(obj);
+        xtable.draw();
+      };
+    </script>
+  </body>
+</html>
+<!-- model -->
+<script
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+crossorigin="anonymous"
+></script>

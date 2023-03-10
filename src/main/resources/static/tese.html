@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #app {
+        display: flex;
+        justify-content: center;
+        font-family: "Work Sans", sans-serif;
+      }
+
+      form {
+        width: 300px;
+        padding: 10px 40px;
+      }
+      form label {
+        text-transform: uppercase;
+        font-size: 13px;
+        letter-spacing: 0.03em;
+        font-weight: bold;
+      }
+      form input,
+      form textarea {
+        border: 1px solid #ccc;
+        color: #333;
+        width: calc(100% - 30px);
+      }
+      form input,
+      form textarea,
+      form button {
+        border-radius: 4px;
+        padding: 8px 15px;
+        font-family: "Work Sans", sans-serif;
+        font-weight: 300;
+      }
+      form div {
+        margin: 20px 0;
+      }
+
+      button {
+        color: white;
+        border: none;
+        width: 100%;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        background: #ccc;
+        cursor: pointer;
+        box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+        transition: 0.25s all ease;
+      }
+      button:hover {
+        transform: translateY(2px);
+      }
+
+      .active {
+        background: #5968d7;
+      }
+
+      pre-content {
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <form action="/">
+        <div>
+          <label for="name">Name:</label><br />
+          <input id="name" type="text" name="name" required />
+        </div>
+        <div>
+          <label for="email">Email:</label><br />
+          <input id="email" type="email" name="email" required />
+        </div>
+        <div>
+          <label for="caps">HOW DO I TURN OFF CAPS LOCK:</label><br />
+          <textarea id="caps" name="caps" required></textarea>
+        </div>
+        <button class="submit" type="submit">Submit123</button>
+        <div>
+          <h3>Response from server:</h3>
+          <pre class="response"></pre>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
+<script>
+    $(function () {
+      var button = $("button");
+      var name = $("input[name=name]");
+
+      name.keyup(function () {
+        if (name.val().length > 0) {
+          button.addClass("active");
+        } else {
+          button.removeClass("active");
+        }
+      });
+
+      $("form").submit(function (event) {
+        event.preventDefault();
+
+        //get the form data
+        var formData = {
+          name: $("input[name=name]").val(),
+          email: $("input[name=email]").val(),
+          caps: $("input[name=caps]").val(),
+        };
+  console.log('hi')
+        // process the form
+        $(".response")
+          .empty()
+          .append(JSON.stringify(data, null, 2));
+      });
+      });
+    });
+</script>
