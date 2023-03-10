@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ZH-tw" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta
+            name="author"
+            content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.108.0" />
+    <title>OGABE|檢舉文章</title>
+    <link href="/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/dist/css/carousel.css" rel="stylesheet" />
+    <link href="/dist/css/my.css" rel="stylesheet" />
+<body>
+<div th:insert="/forumindex"></div>
+<div class="container">
+    <div class="forum_create" style="background-color: #EAE0DA;">
+        <h1> 檢舉文章</h1>
+    </div>
+    <form action="/addReport" method="get" enctype="multipart/form-data">
+        <div class="mb-1" th:if="${articleid != null}">
+            <label for="article_title" class="form-label">欲檢舉文章編號</label>
+            <input type="text" class="form-control" id="articleid" name="articleid"  th:value="${articleid}" readonly>
+        </div>
+         <div class="mb-1" th:if="${articleid == null}">
+            <label for="article_title" class="form-label">欲檢舉文章編號</label>
+            <input type="text" class="form-control" id="articleid" name="articleid" placeholder="請輸入欲檢舉的文章編號">
+        </div>
+        <div class="mb-1">
+            <label for="report_type_id" class="form-label" >文章類型</label>
+            <select class="form-select" aria-label="report_type" id="report_type_id" name="reporttypeid" >
+                <option th:each="report:${list}" th:value="${report.reporttypeid}" th:text="${report.reporttypedetail}"></option>
+            </select>
+        </div>
+        <div class="mb-1">
+            <label for="report_detail" class="form-label">檢舉詳細原因</label>
+            <textarea class="form-control" id="report_detail" rows="10" name="reportdetail" placeholder="請告訴我們更多細節"></textarea>
+        </div>
+        <div class="forum_btn">
+            <input type="submit"   class="btn btn-outline-secondary">
+            <input type="hidden" name="action" value="insert" class="btn btn-outline-secondary">
+            <a href="/forum" class="btn btn-outline-secondary">返回文章列表</a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
