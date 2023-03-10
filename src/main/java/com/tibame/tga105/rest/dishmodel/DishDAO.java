@@ -1,6 +1,7 @@
 package com.tibame.tga105.rest.dishmodel;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,16 +21,26 @@ import com.tibame.tga105.rest.restorderlistmodel.RestOrderListVO;
 public class DishDAO implements DishDAO_interface {
 
 	// 這個DAO有傳圖片
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+//	private static DataSource ds = null;
+//	static {
+//		try {
+//			Context ctx = new InitialContext();
+//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+//		} catch (NamingException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
+	String driver = "com.mysql.cj.jdbc.Driver";
+
+	String url = "jdbc:mysql://localhost:3306/coffeebean?serverTimezone=Asia/Taipei";
+
+	String userid = "root";
+
+	String passwd = "password";
+	
+	
+	
 	private static final String INSERT_STMT = 
 		"INSERT INTO dish (rest_id,dish_name,dish_price,dish_ity,dish_description,dish_spec,dish_img) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
@@ -55,7 +66,15 @@ public class DishDAO implements DishDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+//			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, dishVO.getRestid());
@@ -100,7 +119,15 @@ public class DishDAO implements DishDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+//			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setInt(1, dishVO.getRestid());
@@ -146,7 +173,15 @@ public class DishDAO implements DishDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+//			con = ds.getConnection();
 			con.setAutoCommit(false);
 			
 			pstmt = con.prepareStatement(DELETE_ORDERLISTs);
@@ -195,7 +230,20 @@ public class DishDAO implements DishDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+			
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+			
+//			con = ds.getConnection();
+			
+			
+			
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, dishid);
@@ -257,7 +305,16 @@ public class DishDAO implements DishDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+			
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+//			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 			
@@ -315,7 +372,16 @@ public class DishDAO implements DishDAO_interface {
 	        DishVO dishVO = null;
 
 	        try {
-	            conn = ds.getConnection();
+	        	
+	        	try {
+					Class.forName(driver);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				conn = DriverManager.getConnection(url, userid, passwd);
+	        	
+//	            conn = ds.getConnection();
 	            ps = conn.prepareStatement("SELECT dish_id, dish_img FROM dish WHERE dish_id=?");
 	            ps.setInt(1, dishid);
 	            rs = ps.executeQuery();
@@ -345,7 +411,15 @@ public class DishDAO implements DishDAO_interface {
 		
 			try {
 		
-				con = ds.getConnection();
+				try {
+					Class.forName(driver);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				con = DriverManager.getConnection(url, userid, passwd);
+				
+//				con = ds.getConnection();
 				pstmt = con.prepareStatement(GET_RestOrderLists_ByDishid_STMT);
 				pstmt.setInt(1, dishid);
 				rs = pstmt.executeQuery();

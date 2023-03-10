@@ -2,19 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.tibame.tga105.rest.restmodel.*"%>
-
+<%@ page import="com.tibame.tga105.rest.restorderlistmodel.*"%>
+<%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
-RestService restSvc = new RestService();
-List<RestVO> list = restSvc.getAll();
+RestOrderListService restOrderListSvc = new RestOrderListService();
+List<RestOrderListVO> list = restOrderListSvc.getAll();
 pageContext.setAttribute("list", list);
 %>
 
-<%
-   RestVO restVO = (RestVO) request.getAttribute("restVO");
-%>
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -23,7 +20,7 @@ pageContext.setAttribute("list", list);
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors" />
 <meta name="generator" content="Hugo 0.108.0" />
-<title>OGABE|點餐首頁</title>
+<title>OGABE|點餐後台</title>
 <link href="dist/css/bootstrap.min.css" rel="stylesheet" />
 <link href="dist/css/carousel.css" rel="stylesheet" />
 <link href="dist/css/my.css" rel="stylesheet" />
@@ -83,7 +80,8 @@ pageContext.setAttribute("list", list);
 						<li class="nav-item"><a class="nav-link" aria-current="page"
 							href="index.html">小遊戲</a></li>
 						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="index.html">登入</a> <!--active是調整成高亮
+							aria-current="page" href="index.html">登入</a>
+						<!--active是調整成高亮
                 --></li>
 						<!-- Button trigger modal -->
 						<button type="button" class="btn btn-primary"
@@ -115,18 +113,18 @@ pageContext.setAttribute("list", list);
 						<form class="">
 							<div class="form-floating mb-3">
 								<input type="email" class="form-control rounded-3"
-									id="floatingInput" placeholder="name@example.com" /> <label
-									for="floatingInput">Email address</label>
+									id="floatingInput" placeholder="name@example.com" />
+								<label for="floatingInput">Email address</label>
 							</div>
 							<div class="form-floating mb-3">
 								<input type="password" class="form-control rounded-3"
-									id="floatingPassword" placeholder="Password" /> <label
-									for="floatingPassword">Password</label>
+									id="floatingPassword" placeholder="Password" />
+								<label for="floatingPassword">Password</label>
 							</div>
 							<button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary"
 								type="submit">Sign up</button>
-							<small class="text-muted">By clicking Sign up, you agree
-								to the terms of use.</small>
+							<small class="text-muted">By clicking
+								Sign up, you agree to the terms of use.</small>
 							<hr class="my-4" />
 							<h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
 							<button class="w-100 py-2 mb-2 btn btn-outline-dark rounded-3"
@@ -157,30 +155,82 @@ pageContext.setAttribute("list", list);
 			</div>
 		</div>
 		<!-- model end -->
-		<div class="container-fluid pt-5 px-5">
-			<h1 class="h_center">餐廳選擇</h1>
-		</div>
-		<hr />
-		<c:forEach var="restVO" items="${list}">
-		<div class="row featurette h_center">			
-				<div class="card mb-3" style="max-width: 540px;">
-					<div class="row g-0">
-						<div class="col-md-4 h_center">
-							<img class="figure-img img-fluid rounded"
-								src="RestServlet?restid=${restVO.restid}">
+<!-- 		<div class="container-fluid pt-5 px-5"> -->
+			<!--         <h1 class="h_center">已收到您的訂單</h1> -->
+			<!--       </div> -->
+			<!--       <hr /> -->
+			<!--       <h2 class="h_center">這是您的訂購項目</h2> -->
+
+			<!--       <table class="table table-bordered"> -->
+			<!--         <thead> -->
+			<!--           <tr> -->
+			<!-- <!--             <th scope="col">訂單明細編號</th> -->
+			
+			<!-- <!--             <th scope="col">訂單備註</th> -->
+			
+			<!--             <th scope="col">餐點</th> -->
+			<!--      		<th scope="col">餐點價格</th> -->
+			<!--      		<th scope="col">餐點數量</th> -->
+
+			<!--           </tr> -->
+			<!--         </thead > -->
+			<!--         <tbody> -->
+			<%-- <%--         <c:forEach var="restOrderListVO" items="${list}" > --%>
+			
+			<!--           <tr> -->
+			<%-- <%--             <td>${restOrderListVO.orderlistid}</td> --%>
+			
+			<%-- <%--             <td>${restOrderListVO.orderid}-[${restOrderListVO.restOrderVO.ordermemo}]</td> --%>
+			
+			<%-- 			<td>${param.dishid}-[${restOrderListVO.dishVO.dishname}]</td> --%>
+			<%--             <td>${param.dishprice}</td> --%>
+			<%--             <td>${param.dishqty}</td>           --%>
+			<!--       	 </tr> -->
+			<%-- <%--          </c:forEach> --%>
+			
+			<!--          <table> -->
+			<!-- <!-- 				<hr size="1" noshade="noshade" style="border:1px #cccccc dotted;"/> -->
+			
+			<!-- 				<tr> -->
+			<!-- <!-- 					<td class="col"></td> -->
+			
+			<!-- <!-- 					<td class="col"></td> -->
+			
+			<!-- 					<td class="col"></td> -->
+			<!-- 					<td class="col rest_dish_select_qty ">總金額:</td> -->
+			<!-- 					<td class="col height-20 rest_dish_select_price_color"></td> -->
+			<!-- 				</tr> -->
+			<!-- 		</table> -->
+
+			<!--         </tbody> -->
+			<!--       </table> -->
+			<div class="container-fluid pt-5 px-5 h_center">
+				<div class="bg-lightblue">
+					<div
+						class="form-label rest_dish_select_qty rest_dish_select_word_color">
+						<div class="h_center">
+							<img src="images\emojione_checks.jpg"
+								class="figure-img img-fluid rounded" alt="check" />
 						</div>
-						<div class="col-md-8">
-							<div class="card-body text-center">
-								<h5 class="card-title">餐廳: ${restVO.restname}</h5>
-								<p class="card-text">地址: ${restVO.restaddress}</p>
-								<a class="btn rest-btn-primary" href="dishshop2.jsp?restid=${restVO.restid}">線上點餐</a>
-							</div>
-						</div>
+						<h1 class="fw-normal">恭喜訂餐完成!</h1>
+					</div>
+					<br />
+					<div class="form-label rest_dish_select_qty text-center">
+						<label>感謝您的訂餐，<br/>餐點將盡速為您製作!
+						</label>
+					</div>
+					<br />
+					<div class="form-label rest_dish_select_qty text-center">
+						<label>並請於預定時段至餐廳取餐!</label>
+					</div>
+					<br />
+					<div class="text-center">
+						<a class="btn btn-outline-secondary" href="index.html">回首頁</a> 
+						<a class="btn btn-outline-secondary" href="#">會員中心</a>
 					</div>
 				</div>
-			</c:forEach>
-		</div>
-		<hr class="featurette-divider" />
+			</div>
+			<hr class="featurette-divider" />
 	</main>
 	<!-- footer -->
 	<footer
