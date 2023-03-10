@@ -20,19 +20,8 @@ import com.tibame.tga105.rest.restorderlistmodel.RestOrderListVO;
 
 public class DishDAO implements DishDAO_interface {
 
-<<<<<<< HEAD
+
 //	 這個DAO有傳圖片
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
-=======
-	// 這個DAO有傳圖片
 //	private static DataSource ds = null;
 //	static {
 //		try {
@@ -42,7 +31,6 @@ public class DishDAO implements DishDAO_interface {
 //			e.printStackTrace();
 //		}
 //	}
->>>>>>> 9eff345dd0f9fe0161eaefb1a5d9356e1e6ca4ac
 
 	String driver = "com.mysql.cj.jdbc.Driver";
 

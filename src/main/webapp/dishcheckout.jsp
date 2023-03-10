@@ -1,9 +1,9 @@
-<%@page import="com.tibame.tga105.rest.restorderlistmodel.RestOrderListVO"%>
-<%@page import="com.tibame.tga105.rest.restordermodel.RestOrderVO"%>
+<%@page import="com.tibame.tga105.rest.restorderlistmodel.*"%>
+<%@page import="com.tibame.tga105.rest.restordermodel.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.* ,com.tibame.tga105.rest.dishmodel.DishVO"%>
+<%@ page import="java.util.* ,com.tibame.tga105.rest.dishmodel.*"%>
 <html>
 <head>
 <title>checkout</title>

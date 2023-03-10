@@ -23,6 +23,8 @@ import com.tibame.tga105.rest.restorderstatusmodel.RestOrderStatusService;
 import com.tibame.tga105.rest.restorderstatusmodel.RestOrderStatusVO;
 import com.tibame.tga105.rest.usermodel.UserService;
 import com.tibame.tga105.rest.usermodel.UserVO;
+
+
 @WebServlet("/restOrder.do")
 public class RestOrderServlet extends HttpServlet{
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -239,11 +241,14 @@ public class RestOrderServlet extends HttpServlet{
 				//訂單存到資料庫
 				RestOrderService restOrderSvc = new RestOrderService();
 				RestOrderVO restOrderVO = restOrderSvc.addRestorder(userid, restid, orderstatusid, ordertime, ordermemo);
+
 //				RestOrderVO restOrderVO = restOrderSvc.insertWithRestOrderList(RestOrderVO restOrderVO,  List<RestOrderListVO> list);
 //				
 			
 				//訂單明細取值
 			    Integer orderid= restOrderVO.getOrderid();
+			    
+			    
 //			    System.err.println("order_id = " + orderid);
 //				Integer dishid= Integer.valueOf(req.getParameter("dishid").trim());
 //				Integer dishprice= Integer.valueOf(req.getParameter("dishprice").trim());
