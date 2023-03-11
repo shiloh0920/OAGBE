@@ -225,7 +225,7 @@ pageContext.setAttribute("list", list);
 					</div>
 					<br />
 					<div class="text-center">
-						<a class="btn btn-outline-secondary" href="index.html">回首頁</a> 
+						<a class="btn btn-outline-secondary" href="#">回首頁</a> 
 						<a class="btn btn-outline-secondary" href="#">會員中心</a>
 					</div>
 				</div>

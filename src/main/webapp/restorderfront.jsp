@@ -10,9 +10,9 @@
 
 
 <%
-    RestOrderListService restOrderListSvc = new RestOrderListService();
-    List<RestOrderListVO> list = restOrderListSvc.getAll();
-    pageContext.setAttribute("list",list);
+//     RestOrderListService restOrderListSvc = new RestOrderListService();
+//     List<RestOrderListVO> list = restOrderListSvc.getAll();
+//     pageContext.setAttribute("list",list);
 %>
 
 <!DOCTYPE html>
@@ -312,7 +312,7 @@
 <!-- 				<hr size="1" noshade="noshade" style="border:1px #cccccc dotted;"/> -->
 				<tr>
 					<td class="col"></td>
-					<td class="col rest_dish_select_qty ">總金額:$<%=amount%></td>
+<%-- 					<td class="col rest_dish_select_qty ">總金額:$<%=amount%></td> --%>
 					<td class="col height-20 rest_dish_select_price_color"></td>
 				</tr>
 		</table>

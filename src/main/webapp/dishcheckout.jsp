@@ -155,9 +155,9 @@
 		<input type="hidden" name="action" value="insert">
 		<input type="hidden" name="orderid" value="${param.orderid}">
 <%-- 		<input type="hidden" name="userid" value="${param.userid}"> --%>
-		<input type="hidden" name="dishid" value="${param.dishid}">
-		<input type="hidden" name="dishprice" value="${param.dishprice}">
-		<input type="hidden" name="dishqty" value="${param.dishity}">
+<%-- 		<input type="hidden" name="dishid" value="${param.dishid}"> --%>
+<%-- 		<input type="hidden" name="dishprice" value="${param.dishprice}"> --%>
+<%-- 		<input type="hidden" name="dishqty" value="${param.dishity}"> --%>
 		<input type="hidden" name="restid" value="${param.restid}">
 		<input type="hidden" name="amount" value="<%=amount%>">
 		<input type="hidden" name="restOrderStatusid" value="${restOrderStatusVO.orderstatusid}">

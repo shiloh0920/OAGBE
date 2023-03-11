@@ -8,7 +8,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.tibame.tga105</groupId>
-	<artifactId>TGA-105-MoLife</artifactId>
+	<artifactId>TGA-105-ogabe</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>labweb-jdbc-boot</name>

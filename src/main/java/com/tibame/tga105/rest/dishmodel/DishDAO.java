@@ -10,18 +10,21 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import com.tibame.tga105.rest.restorderlistmodel.RestOrderListVO;
 
 
 public class DishDAO implements DishDAO_interface {
 
+	// 這個DAO有傳圖片
+	
+	
+	String driver = "com.mysql.cj.jdbc.Driver";
 
-//	 這個DAO有傳圖片
+	String url = "jdbc:mysql://localhost:3306/coffeebean?serverTimezone=Asia/Taipei";
+
+	String userid = "root";
+
+	String passwd = "password";
 //	private static DataSource ds = null;
 //	static {
 //		try {
@@ -32,16 +35,6 @@ public class DishDAO implements DishDAO_interface {
 //		}
 //	}
 
-	String driver = "com.mysql.cj.jdbc.Driver";
-
-	String url = "jdbc:mysql://localhost:3306/coffeebean?serverTimezone=Asia/Taipei";
-
-	String userid = "root";
-
-	String passwd = "password";
-	
-	
-	
 	private static final String INSERT_STMT = 
 		"INSERT INTO dish (rest_id,dish_name,dish_price,dish_ity,dish_description,dish_spec,dish_img) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
@@ -66,7 +59,7 @@ public class DishDAO implements DishDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-
+			
 			try {
 				Class.forName(driver);
 			} catch (ClassNotFoundException e) {
@@ -75,6 +68,7 @@ public class DishDAO implements DishDAO_interface {
 			}
 			con = DriverManager.getConnection(url, userid, passwd);
 			
+
 //			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
@@ -128,6 +122,7 @@ public class DishDAO implements DishDAO_interface {
 			}
 			con = DriverManager.getConnection(url, userid, passwd);
 			
+			
 //			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
@@ -174,6 +169,7 @@ public class DishDAO implements DishDAO_interface {
 
 		try {
 
+			
 			try {
 				Class.forName(driver);
 			} catch (ClassNotFoundException e) {
@@ -181,6 +177,8 @@ public class DishDAO implements DishDAO_interface {
 				e.printStackTrace();
 			}
 			con = DriverManager.getConnection(url, userid, passwd);
+			
+			
 			
 //			con = ds.getConnection();
 			con.setAutoCommit(false);
@@ -231,7 +229,6 @@ public class DishDAO implements DishDAO_interface {
 
 		try {
 
-			
 			try {
 				Class.forName(driver);
 			} catch (ClassNotFoundException e) {
@@ -241,10 +238,8 @@ public class DishDAO implements DishDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			
 			
+			
 //			con = ds.getConnection();
-			
-			
-			
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, dishid);
@@ -306,7 +301,6 @@ public class DishDAO implements DishDAO_interface {
 
 		try {
 
-			
 			try {
 				Class.forName(driver);
 			} catch (ClassNotFoundException e) {
@@ -314,6 +308,8 @@ public class DishDAO implements DishDAO_interface {
 				e.printStackTrace();
 			}
 			con = DriverManager.getConnection(url, userid, passwd);
+			
+			
 			
 //			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
@@ -374,6 +370,7 @@ public class DishDAO implements DishDAO_interface {
 
 	        try {
 	        	
+	        	
 	        	try {
 					Class.forName(driver);
 				} catch (ClassNotFoundException e) {
@@ -381,6 +378,9 @@ public class DishDAO implements DishDAO_interface {
 					e.printStackTrace();
 				}
 				conn = DriverManager.getConnection(url, userid, passwd);
+				
+	        	
+	        	
 	        	
 //	            conn = ds.getConnection();
 	            ps = conn.prepareStatement("SELECT dish_id, dish_img FROM dish WHERE dish_id=?");
@@ -412,6 +412,7 @@ public class DishDAO implements DishDAO_interface {
 		
 			try {
 		
+				
 				try {
 					Class.forName(driver);
 				} catch (ClassNotFoundException e) {
@@ -419,6 +420,9 @@ public class DishDAO implements DishDAO_interface {
 					e.printStackTrace();
 				}
 				con = DriverManager.getConnection(url, userid, passwd);
+				
+				
+				
 				
 //				con = ds.getConnection();
 				pstmt = con.prepareStatement(GET_RestOrderLists_ByDishid_STMT);
