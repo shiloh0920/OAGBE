@@ -57,6 +57,9 @@ public class ArticleEntity {
     @OneToMany(mappedBy = "articleEntity")
     private List<CollectionEntity> collectionEntity;
     
+    @OneToMany(mappedBy="articleEntity")
+    private List<ReportEntity> reportEntity;
+    
     @Lob
     private byte[] articleimg;
     
@@ -67,6 +70,16 @@ public class ArticleEntity {
     private Integer likecount;
     
    
+    
+    
+    
+	public List<ReportEntity> getReportEntity() {
+		return reportEntity;
+	}
+
+	public void setReportEntity(List<ReportEntity> reportEntity) {
+		this.reportEntity = reportEntity;
+	}
 
 	public Integer getLikecount() {
 		return likecount;

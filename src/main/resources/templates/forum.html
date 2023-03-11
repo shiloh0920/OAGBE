@@ -38,11 +38,11 @@
     </div>
 	   <div th:if="${#strings.isEmpty(ignore)}">
       <span class="close" data-bs-dismiss="alert">&#128512;</span>
-      <strong  th:text="${user.username}+'歡迎來到OGABE論壇，很高興遇見您～'"></strong>
+      <span  th:text="${user.username}+'歡迎來到OGABE論壇，很高興遇見您～'"></span>
      	</div>
 			<div style="margin-top: 10px; margin-bottom:20px" >
-			<span>&rarr;</span><a th:each="u:${update}" th:if="${u.updatetime} != ${u.postdatetime}" th:text="'  <'+${u.articletitle}+'>,'" style="color:blue; text-decoration:none" th:href="@{/read/{id}(id=${u.articleid})}"></a>
-			<span th:text="近期更新趕快瀏覽吧+'~'"></span>
+			<span th:each="u:${update}" th:if="${u.updatetime} != ${u.postdatetime}">&rarr;</span><a th:each="u:${update}" th:if="${u.updatetime} != ${u.postdatetime}" th:text="'  <'+${u.articletitle}+'>,'" style="color:blue; text-decoration:none" th:href="@{/read/{id}(id=${u.articleid})}"></a>
+			<span th:each="u:${update}" th:if="${u.updatetime} != ${u.postdatetime}"   th:text="近期更新趕快瀏覽吧+'~'"></span>
 			</div>
     <div class="forum_article_type">
     <span>

@@ -40,6 +40,44 @@ public class ReportEntity {
 	
 	
 	private Integer status;
+	
+	private String sign;
+	
+	private String remark;
+	
+	@Column(name="submit_datetime",nullable = true ,insertable = true)
+	private Date submitdatetime;
+	
+	
+
+	public Date getSubmitdatetime() {
+		return submitdatetime;
+	}
+
+
+	public void setSubmitdatetime(Date submitdatetime) {
+		this.submitdatetime = submitdatetime;
+	}
+
+
+	public String getSign() {
+		return sign;
+	}
+
+
+	public void setSign(String sign) {
+		this.sign = sign;
+	}
+
+
+	public String getRemark() {
+		return remark;
+	}
+
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
 
 	public Integer getReportid() {

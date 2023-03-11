@@ -9,7 +9,7 @@
           content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
   />
   <meta name="generator" content="Hugo 0.108.0" />
-  <title>OGABE|論壇後台</title>
+  <title>OGABE|論壇</title>
   <link href="/dist/css/carousel.css" rel="stylesheet" />
     <link href="/dist/css/my.css" rel="stylesheet" />
     <link href="/cheatsheet.css" rel="stylesheet" />
@@ -22,7 +22,14 @@
     <div class="forum_list" style="background-color: #EAE0DA;">
       <h1>論壇後台系統</h1>
     </div>
-     <h1 th:if="${#lists.isEmpty(list)}" th:text="目前尚未收到檢舉"></h1>
+  <div class="card" style="width: 21rem;">
+  <img src="/images/coffeesohp2.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">文章檢舉列表</h5>
+    <p class="card-text">請務必確認檢舉詳細原因是否與事實相符</p>
+    <a th:href="@{/reportBackstage}" class="btn btn-primary">查看</a>
+  </div>
+</div>
     <table class="table table-bordered table-striped table-hover " th:unless="${#lists.isEmpty(list)}">
       <thead>
         <tr class="table-dark">
@@ -31,11 +38,7 @@
           <th>檢舉詳述</th>
           <th>檢舉時間</th>
           <th>審核狀態</th>
-          <th>審核管理員</th>
-          <th>管理員備註</th>
-          <th>審核日期</th>
           <th></th>
-          
       </thead>
       <tbody>
         <tr  th:each="report:${list}">
@@ -43,26 +46,17 @@
           <td th:text="${report.reportTypeEntity.reporttypedetail}"></td>
           <td th:text="${report.reportdetail}"></td>
           <td th:text="${#dates.format(report.reportdatetime,'yyyy-MM-dd')}"></td>
-         	<td th:if="${report.status==0}">處理中</td>
-         	<td th:if="${report.status==1}">已審核(檢舉成立)</td>
-         	<td th:if="${report.status==2}">已審核(檢舉無效)</td>
-         	<td th:if="${report.status==1 || report.status==2}" th:text="${report.sign}"></td>
-         	<td th:if="${report.status==0}" th:text="請儘快處理" style="color:red"></td>
-         	<td th:if="${report.status==1 || report.status==2}" th:text="${report.remark}"></td>
-         	<td th:if="${report.status==1 || report.status==2}" th:text="${#dates.format(report.submitdatetime,'yyyy-MM-dd HH:mm:ss')}"></td>
-         	<td th:if="${report.status==0}" ></td>
-         	<td th:if="${report.status==0}" th:text="請儘快處理" style="color:red"></td>
-         	<td th:if="${report.status==1 || report.status==2}" >&radic;</td>
-         	<td th:if="${report.status==0}">
+          <td th:if="${report.status==0}" th:text="處理中"></td>
+         	<td th:if="${report.status!=0}">確認中</td>
+         	<td>
          	<button class="btn btn-outline-secondary">
-         	<a th:href="@{/read/{id}(id=${report.articleEntity.articleid}, value=${report.reportid})}"  style="text-decoration:none;color:grey">查看
+         	<a th:href="@{/read/{id}(id=${report.articleEntity.articleid})}"  style="text-decoration:none;color:grey">查看
          	</a>
          	</button>
          	</td>
         </tr>
       </tbody>
     </table>
-     <a href="/forumBackStage" class="btn btn-outline-secondary">返回論壇後台</a>
 <!--     <nav> -->
 <!--       <ul class="pagination" style="float: right">                    報錯原因不明 -->
 <!--         <li class="page-item"><a class="page-link" href="#" th:href="@{'/reportBackstage?page='+ ${page.number-1}}" th:unless="${page.first}">上一頁</a></li> -->
