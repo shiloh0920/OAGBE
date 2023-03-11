@@ -3,18 +3,18 @@ package com.tibame.tga105.mall.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import com.ogabe.user.entity.UserVO;
+import com.tibame.tga105.user.entity.UserVO;
 
 @Data
 @NoArgsConstructor
@@ -30,4 +30,30 @@ public class Role {
 	
 	@ManyToMany(mappedBy="roles")
 	private List<UserVO> users = new ArrayList<>();
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<UserVO> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<UserVO> users) {
+		this.users = users;
+	}
+	
+	
 }

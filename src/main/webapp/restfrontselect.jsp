@@ -23,7 +23,7 @@ pageContext.setAttribute("list", list);
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors" />
 <meta name="generator" content="Hugo 0.108.0" />
-<title>OGABE|點餐後台</title>
+<title>OGABE|點餐首頁</title>
 <link href="dist/css/bootstrap.min.css" rel="stylesheet" />
 <link href="dist/css/carousel.css" rel="stylesheet" />
 <link href="dist/css/my.css" rel="stylesheet" />

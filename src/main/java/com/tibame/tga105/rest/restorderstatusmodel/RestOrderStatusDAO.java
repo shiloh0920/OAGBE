@@ -1,6 +1,7 @@
 package com.tibame.tga105.rest.restorderstatusmodel;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,16 +19,24 @@ import com.tibame.tga105.rest.restordermodel.RestOrderVO;
 
 public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 	
+	String driver = "com.mysql.cj.jdbc.Driver";
 
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+	String url = "jdbc:mysql://localhost:3306/coffeebean?serverTimezone=Asia/Taipei";
+
+	String userid = "root";
+
+	String passwd = "password";
+	
+	
+//	private static DataSource ds = null;
+//	static {
+//		try {
+//			Context ctx = new InitialContext();
+//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+//		} catch (NamingException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	private static final String INSERT_STMT = 
 		"INSERT INTO rest_order_status (order_status) VALUES ( ?)";
@@ -52,7 +61,15 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 
 		try {
 
-			con = ds.getConnection();
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+//			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, restOrderStatusVO.getOrderstatus());
@@ -91,7 +108,15 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 
 		try {
 
-			con = ds.getConnection();
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+//			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, restOrderStatusVO.getOrderstatus());
@@ -132,7 +157,16 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 
 		try {
 
-			con = ds.getConnection();
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+			
+//			con = ds.getConnection();
 			con.setAutoCommit(false);
 			
 			pstmt = con.prepareStatement(DELETE_RESTORDERs);
@@ -183,7 +217,17 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 
 		try {
 
-			con = ds.getConnection();
+			
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+			
+//			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, orderstatusid);
@@ -240,7 +284,16 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 
 		try {
 
-			con = ds.getConnection();
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+			
+//			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 			
@@ -298,7 +351,16 @@ public class RestOrderStatusDAO implements RestOrderStatusDAO_interface{
 	
 		try {
 	
-			con = ds.getConnection();
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+			
+//			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_Restorders_ByOrderstatusid_STMT);
 			pstmt.setInt(1, orderstatusid);
 			rs = pstmt.executeQuery();

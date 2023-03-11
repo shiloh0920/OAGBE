@@ -1,0 +1,153 @@
+<!DOCTYPE html >
+<html lang="en" xmlns="https://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OGABE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  	<link href="/dist/css/bootstrap.min.css" th:href="@{/}" rel="stylesheet"/>
+    <link href="/dist/css/carousel.css" rel="stylesheet" />
+    <link href="/dist/css/my.css" rel="stylesheet" />
+  	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+
+  	<style>
+  		body{
+  			background-color: #888888;
+  		}
+  		.card{
+  			background-color: #F8EDE3;
+  		}
+  	</style>
+  </head>
+  <body>
+  
+  <header>
+  <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-headcolor" aria-label="Fourth navbar example">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html"><img src="/dist/images/ogabecolor.png" alt="Ogabe Logo" /></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false"
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse flex-grow-0" id="navbarsExample04">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="index.html">最新消息</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+               aria-expanded="false">購物商城</a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="/products/beans">咖啡豆</a>
+              </li>
+              <li><a class="dropdown-item" href="#">咖啡器具</a></li>
+              <li>
+                <a class="dropdown-item" href="#">組合活動</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="forum_welcome.html">論壇</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="index.html">線上訂餐</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="index.html">體驗課程</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="index.html">優惠活動</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="index.html">小遊戲</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">登入</a><!--active是調整成高亮
+                -->
+          </li>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop">
+            註冊
+          </button>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+  
+                </div>
+            </div>
+        </nav>
+        <!-- Header-->
+        <header class="py-5" style="background-color: #99582a">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">OGABE</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">以美好的咖啡開始您的一天。</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Section-->
+        <div class="container mt-5 d-flex justify-content-around" th:each="product:${allProducts}">
+       		
+        	<div class="card col-6" style="width: 18rem;">
+  			<img class="card-img-top" th:src="${product.getImage()}" alt="Card image cap">
+  			<div class="card-body">
+    		<h5 class="card-title text-center" th:text="${product.getName()}"></h5>
+    		<p class="card-text text-center" th:text="${#numbers.formatCurrency(product.getPrice())}"></p>
+            <div class="text-center">
+                <a class="btn btn-outline-dark mt-auto" th:href="@{/products/cart/add(productid=${product.getId()})}">Add to Cart</a></div>
+            </div>
+			</div>
+			
+			<div class="col-md-8 card">
+      			<div class="card-body">
+        		<h5 class="card-title">Product Description</h5>
+        		<p class="card-text" th:text="${product.getDescription()}"></p>
+        		<p class="card-text"><small class="text-muted"><span th:text="${product.getStock}"></span> Left in Stock</small></p>
+      		</div>
+    		</div>
+      </div>
+
+
+      <!-- 商品展示 -->
+      <div class="row">
+        <div class="col-md-4" th:each="product : ${products}">      
+          <!-- 商品內容 --> 
+          <div class="card mb-4 shadow-sm">
+            <img th:src="${product.getImage()}" class="card-img-top" alt="Product image">
+            <div class="card-body">
+              <h5 class="card-title" th:text="${product.getName()}"></h5>
+              <p class="card-text" th:text="${product.getDescription()}"></p>
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted" th:text="${product.getPrice()}"></small>
+                <div class="btn-group">
+                  <a th:href="@{/product/details/{id}(id=${product.getId()})}" class="btn btn-sm btn-outline-secondary">View</a>
+                  <button class="btn btn-sm btn-outline-secondary">Add to cart</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+        
+        <!-- Footer-->
+        <footer class="py-5 mt-5 bg-dark" style="float:bottom">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; OGABE 2023</p></div>
+        </footer>
+  	
+  	
+  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>

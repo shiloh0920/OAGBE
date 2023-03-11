@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <title>Title</title>
+ <link href="/dist/css/carousel.css" rel="stylesheet" />
+    <link href="/dist/css/my.css" rel="stylesheet" />
+    <link href="/cheatsheet.css" rel="stylesheet" />
+    <link href="/dist/css/guideline.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<style>
+  h1{
+    text-align: center;
+    margin-top: 3%;
+    margin-bottom: 3%;
+  }
+  .forum_list{
+    border: 1px grey;
+    border-radius: 100px;
+    border-width: 0%;
+  }
+  .container{
+
+    height:100%;
+  }
+  .table{
+    text-align: center;
+  }
+  .forum_page{
+    text-align: center;
+
+  }
+  .placeholder col-2 bg-light{
+    text-align: center;
+  }
+  .forum_function{
+    margin-left: 11.30%;
+  }
+  .forum_read{
+    border: 1px grey;
+    border-radius: 100px;
+    border-width: 0%;
+
+  }
+  .title_box{
+    border-bottom: solid 1px;
+  }
+  .article_content{
+    border-bottom:1px solid black ;
+    width: 100%;
+    height: 200px;
+  }
+  .forum_article_type{
+    margin-bottom: 10px;
+  }
+  .forum_choose{
+    float:right
+  }
+  .forum_btn {
+    float: right;
+  }
+  #reader{
+    position: fixed;
+    right: 12%;
+    top: 40%;
+
+  }
+</style>
+<body>
+<div th:insert="/forumindex"></div>
+<div class="container"th:object="${articleEntity}" >
+  <div class="forum_read" style="background-color: #EAE0DA;">
+    <h1>瀏覽文章</h1>
+  </div>
+   <div class="alert alert-danger alert-dismissible" th:unless="${#strings.isEmpty(deleteReply)}">
+      <a class="close" data-bs-dismiss="alert">&times;</a>
+      <span th:text="${deleteReply}"></span>
+      </div>
+  <div class="title_box">
+    <h2 style="display: inline-block; color: wheat;" class="article_type_id" th:text="*{articleTypeEntity.articletypedetail}">關於選豆</h2>
+    <h5 style="display: inline-block; margin-left: 40px;" class="article_title" th:text="'文章標題 '+*{articletitle}">賴比瑞亞相關提問</h5>
+   	<span style="display: inline-block; margin-left: 40px;"class="user_id" th:if="*{userVo}!=null" th:text="'創作者會員 :'+*{userVo.username}">創作者會員編號 : 001</span>
+    <span style="display: inline-block; margin-left: 40px;"class="post_datetime" th:text="'發布日期'+*{#dates.format(postdatetime,'yyyy-MM-dd HH:mm:ss')}">發布日期 : 2023/01/20</span>
+ 	<span style="display: inline-block;" th:unless="${user.userstatusvo.statusid==1}">
+    <form method="get" action="/addCollect">
+    <input type="hidden" th:name="articleid" th:value="*{articleid}">
+    <button type="submit" class="btn btn-outlineprimary" data-bs-toggle="modal" data-bs-target="#systemnote" >
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+  	<path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+  	<path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
+	</svg>加入收藏
+    </button>
+    </form>
+    </span>
+<!--     <span style="display: inline-block;" th:if="${#lists.contains(col.![uservo.userid] == user.userid)}"> -->
+<!--     <form method="get" action="/addCollect"> -->
+<!--     <input type="hidden" th:name="articleid" th:value="*{articleid}"> -->
+<!--     <button type="submit" class="btn btn-outlineprimary" data-bs-toggle="modal" data-bs-target="#systemnote" > -->
+<!--     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16"> -->
+<!--   	<path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/> -->
+<!--   	<path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/> -->
+<!-- 	</svg>加入收藏ss -->
+<!--     </button> -->
+<!--     </form> -->
+<!--     </span> -->
+    <span style="display: inline-block;" th:unless="${user.userstatusvo.statusid==1}">
+     <a th:href="@{/forumaddLike(value=${articleEntity.articleid})}" > 
+     <button type="button" class="btn btn-outlineprimary" data-bs-toggle="modal" data-bs-target="#systemnote">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+  		<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+		</svg>我要點讚
+		 </button>
+		 </a>
+    </span>
+    
+    <span style="display: inline-block;" th:unless="${user.userstatusvo.statusid==1}">
+    <a th:href="@{/forumReport(value=${articleEntity.articleid})}" > 
+    <button type="button" class="btn btn-outlineprimary" data-bs-toggle="modal" data-bs-target="#systemnote">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16" >
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+      </svg>檢舉文章
+    </button>
+    </a>
+    </span>
+    <span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
+  	<path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
+	</svg><span th:text="${articleEntity.likecount}"></span>
+    </span>
+  
+  </div>
+  <div class="article_content">
+    <p th:text="*{articlecontext}">文章內容</p>
+    <div>
+  	<img th:if="${articleEntity. articleimg} != null" th:src="@{/image/displays/{articleid}(articleid=${articleEntity.articleid})}" width="145"
+						height="100" style="float:right">  
+    </div>
+  </div>
+  <table class="table table-borderless" th:object="${lister}" >
+    <thead>
+     <tr>
+     <div th:unless="${#lists.isEmpty(lister)}">
+      <th class="user_id">會員帳號</th>
+      <th class="reply_content">留言內容</th>
+      <th class="reply_datetime" >留言回覆時間</th>
+      </div>
+    </tr>
+    </thead>
+    <tbody >
+    <tr th:each="list:${lister}" >
+      <td th:if="${user.userid}== ${list.userVo.userid}" th:text="我" style="color: blue;">001</td>
+      <td th:if="${user.userid}!= ${list.userVo.userid}" th:text="${list.userVo.username}"></td>
+      <td th:text="${list.replycontext}">留言內容</td>
+      <td th:text="${#dates.format(list.replydatetime,'yyyy-MM-dd HH:mm:ss')}" >2023/01/22</td>
+      <td>
+      <form  method="get" th:action="@{/delete/{id}(id=${list.replyid})}">
+      <input type="hidden" name="aid" th:value="${articleEntity.articleid}" >
+      <button class="btn btn-danger btn-sm" 
+      type="submit" th:if="${user.userid}== ${list.userVo.userid}" th:text="刪除留言"  id="reply">
+      </form>
+      </td>
+    </tr>
+	<div th:if="${#lists.isEmpty(lister)}" th:text="目前尚未有留言" > 
+    </tbody>
+  </table>
+  <form action="#" th:action="@{/comments}" method="get"  >
+    <input type="hidden" th:name="articleid" th:value="${articleEntity.articleid}" class="cancel" th:unless="${user.userstatusvo.statusid==1}">
+    <div th:if="${user.userstatusvo.statusid ==1}" style="border-bottom:1px solid black"></div>
+    <textarea  name="replycontext" cols="160" rows="3" placeholder="請寫下您的留言" th:if="${user.userstatusvo.statusid !=1}"></textarea>
+    <div class="forum_btn">
+      <button  class="btn btn-outline-secondary" > 
+      <a  th:href="@{/forumReportCheck(value=${articleEntity.articleid})}" th:if="${user.userstatusvo.statusid ==1}" th:text="審核" style="text-decoration:none;color:grey">
+      </a></button>
+      <button type="submit" class="btn btn-outline-secondary" th:if="${user.userstatusvo.statusid !=1}" th:text="發布留言"> 提交</button>
+      <a href="/forum" class="btn btn-outline-secondary" th:if="${user.userstatusvo.statusid !=1}" >返回文章列表</a>
+      <a href="/reportBackstage" class="btn btn-outline-secondary" th:if="${user.userstatusvo.statusid ==1}">返回論壇後台</a>
+    </div>
+  </form>
+</div>
+<script  th:inline="javascript">
+document.querySelector('#reply').on('click',function(event){
+	event.preventDefault();
+	alert('確定嗎?');
+	
+})
+
+</script>
+</body>
+</html>
