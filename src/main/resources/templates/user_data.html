@@ -223,7 +223,7 @@
 						<div class="form-group col-sm-8" th:switch="${uservo.userstatusvo.statusid}">
 						
 							<i class="fa-regular fa-id-card fa-lg"></i>
-						  	<label for="exampleInputPassword1">會員狀態      (尚未收到認證信?  請點選 <a th:href="@{/resendUserVerficationEmail}">補寄認證信</a>)</label> 						  	    
+						  	<label for="exampleInputPassword1">會員狀態      (尚未收到認證信?  請點選 <a th:href="@{/userpage/resendUserVerficationEmail}">補寄認證信</a>)</label> 						  	    
 								<input type="text" class="form-control" id="UserStatus" th:case="1" th:value="管理員" name="userstatus" readonly="readonly">
 								<input type="text" class="form-control" id="UserStatus" th:case="2" th:value="未認證會員" name="userstatus" readonly="readonly">
 								<input type="text" class="form-control" id="UserStatus" th:case="3" th:value="正式會員" name="userstatus" readonly="readonly">

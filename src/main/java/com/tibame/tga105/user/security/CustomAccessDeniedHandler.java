@@ -33,6 +33,10 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.sendRedirect(request.getContextPath() + "/access-denied");
     }
 
+
+
+
+
 }
 
 

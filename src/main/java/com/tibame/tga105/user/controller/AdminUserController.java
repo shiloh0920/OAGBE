@@ -38,6 +38,13 @@ public class AdminUserController {
 	UserAdminService userAdminService;
 	
 	
+	@GetMapping("/login")
+	public String login() {
+
+		return "admin_login";
+	}
+	
+	
 	@GetMapping("/userlist/{pageNo}")
 	public String adminUserList(@PathVariable() int pageNo ,Model m) {
 		int pageSize = 3;
