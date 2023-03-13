@@ -14,15 +14,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import com.tibame.tga105.rest.dishmodel.DishVO;
+import com.tibame.tga105.rest.restmodel.RestService;
+import com.tibame.tga105.rest.restmodel.RestVO;
 import com.tibame.tga105.rest.restorderlistmodel.RestOrderListService;
 import com.tibame.tga105.rest.restorderlistmodel.RestOrderListVO;
 import com.tibame.tga105.rest.restordermodel.RestOrderService;
 import com.tibame.tga105.rest.restordermodel.RestOrderVO;
 import com.tibame.tga105.rest.restorderstatusmodel.RestOrderStatusService;
 import com.tibame.tga105.rest.restorderstatusmodel.RestOrderStatusVO;
-import com.tibame.tga105.rest.usermodel.UserService;
-import com.tibame.tga105.rest.usermodel.UserVO;
+import com.tibame.tga105.user.entity.UserVO;
+import com.tibame.tga105.user.security.UserPrincipal;
+import com.tibame.tga105.user.service.UserService;
 
 
 @WebServlet("/restOrder.do")
@@ -185,16 +190,29 @@ public class RestOrderServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-//			Integer userid = null;
-//			try {
-//				userid = Integer.valueOf(req.getParameter("userid").trim());
-//			} catch (NumberFormatException e) {
-//				errorMsgs.put("userid","會員編號請填數字");
-//			}
-			UserService userSvc = new UserService();
-			UserVO userVO = userSvc.getOneUser(3);
+
 			
-			Integer userid= userVO.getUserid();
+			
+//			UserVO uservo = null;
+//			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//			
+//			if (principal instanceof UserPrincipal) {
+//				 uservo = ((UserPrincipal) principal).getUservo();
+//			}
+			
+			Integer userid = null;
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			if (principal instanceof UserPrincipal) {
+			    userid = ((UserPrincipal) principal).getUservo().getUserid();
+			}
+			
+//			System.err.println(uservo.getUserid());
+			System.err.println(userid);
+			
+//			UserService userSvc = new UserService();
+//			UserVO userVO = userSvc.getOneUser(3);
+//			
+//			Integer userid= uservo.getUserid();
 			
 			
 			Integer restid = null;
@@ -203,6 +221,11 @@ public class RestOrderServlet extends HttpServlet{
 			} catch (NumberFormatException e) {
 				errorMsgs.put("restid","餐廳編號請填數字");
 			}
+
+			//取得餐廳名稱
+			RestService restSvc = new RestService();
+			RestVO restVO = restSvc.getOneRest(restid);
+			String restname = restVO.getRestname();
 			
 //			Integer orderstatusid = null;
 //			try {
@@ -210,11 +233,12 @@ public class RestOrderServlet extends HttpServlet{
 //			} catch (NumberFormatException e) {
 //				errorMsgs.put("orderstatusid","訂單狀態編號請填數字");
 //			}
-			
+
+			//取得訂單狀態
 			RestOrderStatusService restOrderStatusSvc = new RestOrderStatusService();
 			RestOrderStatusVO restOrderStatusVO = restOrderStatusSvc.getOneRestorderstatus(1);
-			
-			Integer orderstatusid = restOrderStatusVO.getOrderstatusid();
+			Integer orderstatusid= restOrderStatusVO.getOrderstatusid();
+			String orderstatus = restOrderStatusVO.getOrderstatus();
 			
 			java.sql.Timestamp ordertime = null;
 			try {
@@ -241,7 +265,7 @@ public class RestOrderServlet extends HttpServlet{
 				//訂單存到資料庫
 				RestOrderService restOrderSvc = new RestOrderService();
 				RestOrderVO restOrderVO = restOrderSvc.addRestorder(userid, restid, orderstatusid, ordertime, ordermemo);
-
+//				uservo.getUserid()
 //				RestOrderVO restOrderVO = restOrderSvc.insertWithRestOrderList(RestOrderVO restOrderVO,  List<RestOrderListVO> list);
 //				
 			
@@ -270,8 +294,23 @@ public class RestOrderServlet extends HttpServlet{
 				
 //				RestOrderListVO restOrderListVO = restOrderListSvc.insert2(RestOrderListVO restOrderListVO, java.sql.Connection con);
 				
+				
+				//總價計算
+				double total = buylist.stream()
+						  .mapToDouble(o -> o.getDishprice() * o.getDishity())
+						  .sum();
+	
+	
+				String amount = String.valueOf(total);
+				
+				
+				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 //				String url = "restorderfront.jsp";
+				req.setAttribute("userid", userid);
+				req.setAttribute("restname", restname);
+				req.setAttribute("orderstatus", orderstatus);
+				req.setAttribute("amount", amount);
 				String url = "/restorderfront.jsp?orderid="+orderid;
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				

@@ -246,7 +246,7 @@ RestOrderVO restOrderVO = (RestOrderVO) request.getAttribute("restOrderVO");
 		
 	</div>
 	
-<jsp:useBean id="userSvc" scope="page" class="com.tibame.tga105.rest.usermodel.UserService" />
+<jsp:useBean id="userSvc" scope="page" class="com.tibame.tga105.user.service.UserService" />
 	<div class="mb-3">
 		<div class="rest_dish_select_qty">會員:
 		<label for="InputRestorderid" class="form-label">		

@@ -19,7 +19,7 @@ public class RestDAO implements RestDAO_interface {
 	
 	String driver = "com.mysql.cj.jdbc.Driver";
 
-	String url = "jdbc:mysql://localhost:3306/coffeebean?serverTimezone=Asia/Taipei";
+	String url = "jdbc:mysql://localhost:3306/ogabe?serverTimezone=Asia/Taipei";
 
 	String userid = "root";
 

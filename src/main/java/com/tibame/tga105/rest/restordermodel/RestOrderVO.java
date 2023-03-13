@@ -69,9 +69,9 @@ public class RestOrderVO implements java.io.Serializable{
 	    return restOrderStatusVO;
     }
 	
-	public com.tibame.tga105.rest.usermodel.UserVO getUserVO() {
-		com.tibame.tga105.rest.usermodel.UserService userSvc = new com.tibame.tga105.rest.usermodel.UserService();
-		com.tibame.tga105.rest.usermodel.UserVO userVO = userSvc.getOneUser(userid);
+	public com.tibame.tga105.user.entity.UserVO getUserVO() {
+		com.tibame.tga105.user.service.UserService userSvc = new com.tibame.tga105.user.service.UserService();
+		com.tibame.tga105.user.entity.UserVO userVO = userSvc.getUserById(userid);
 	    return userVO;
     }
 }

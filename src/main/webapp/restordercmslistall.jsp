@@ -250,7 +250,8 @@
         <c:forEach var="restOrderVO" items="${list}" >
           <tr>
             <td>${restOrderVO.orderid}</td>
-            <td>${restOrderVO.userid}-[${restOrderVO.userVO.username}]</td>         
+            <td>${restOrderVO.userid}</td>     
+<%--             -[${restOrderVO.UserVO.username}]     --%>
             <td>${restOrderVO.restid}-[${restOrderVO.restVO.restname}]</td>           
             <td>${restOrderVO.orderstatusid}-[${restOrderVO.restOrderStatusVO.orderstatus}]</td>
             <td>${restOrderVO.ordertime}</td>        
