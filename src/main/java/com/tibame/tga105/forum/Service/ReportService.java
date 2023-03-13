@@ -30,4 +30,10 @@ public class ReportService {
 
 		return reportRepository.findAll(pageable);
 	}
+	
+	public ReportEntity findOne(Integer id) {
+		
+		return reportRepository.findById(id).get();
+	}
+	
 }

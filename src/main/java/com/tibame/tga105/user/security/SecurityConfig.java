@@ -3,6 +3,7 @@ package com.tibame.tga105.user.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -49,30 +50,76 @@ public class SecurityConfig {
 //		return new InMemoryUserDetailsManager(user);
 //	}
 	
+//	@Bean
+//    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http.csrf().disable()
+//        
+//                .authorizeHttpRequests()
+//				.antMatchers("/userpage/**")
+//				.hasAnyAuthority("USER","ADMIN","UNCERTIFIED")
+//				.antMatchers("/admin/**")
+//				.hasAuthority("ADMIN")
+//				.antMatchers("/","/login","/**")
+//                .permitAll()
+//                .and()
+//                .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
+//				.and()
+//		        .formLogin()
+//                  	.loginPage("/login")
+//                  	.usernameParameter("useremail")
+//                  	.passwordParameter("userpassword")
+//					.defaultSuccessUrl("/", true)
+//					.loginProcessingUrl("/perfomlogin")
+//					.failureUrl("/login?error=true")
+//					.permitAll()
+//				;
+//			return http.build();
+//	}
 	@Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeHttpRequests()
+	  @Order(1)                                                        
+	  public SecurityFilterChain adminLoginFilterChain(HttpSecurity http) throws Exception {
+	      http
+	      	  	.mvcMatcher("/admin/**") 
+	      	  	.authorizeHttpRequests()                                  
+	      	  	.antMatchers("/admin/**")
+	      	  	.hasAuthority("ADMIN")
+	      	  	.and()
+	      	  	.exceptionHandling().accessDeniedHandler(accessDeniedHandler)
+	      	  	.and()
+	      	  	.formLogin()
+		      	  	.loginPage("/admin/user/login")
+		        	.usernameParameter("useremail")
+		        	.passwordParameter("userpassword")
+					.defaultSuccessUrl("/", true)
+					.loginProcessingUrl("/admin/user/perfomlogin")
+					.failureUrl("/admin/user/login?error=true")
+					.permitAll()
+				;
+	      return http.build();
+	  }
+
+	  @Bean                                                            
+	  public SecurityFilterChain userLoginFilterChain(HttpSecurity http) throws Exception {
+	      http
+	      		.authorizeHttpRequests()
 				.antMatchers("/userpage/**")
 				.hasAnyAuthority("USER","ADMIN","UNCERTIFIED")
-				.antMatchers("/admin/**")
-				.hasAuthority("ADMIN")
 				.antMatchers("/","/login","/**")
-                .permitAll()
-                .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
-				.and()
-		        .formLogin()
-                  	.loginPage("/login")
-                  	.usernameParameter("useremail")
-                  	.passwordParameter("userpassword")
+			    .permitAll()
+			    .and()
+			    .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
+			    .and()
+			    .formLogin()
+			      	.loginPage("/login")
+			      	.usernameParameter("useremail")
+			      	.passwordParameter("userpassword")
 					.defaultSuccessUrl("/", true)
 					.loginProcessingUrl("/perfomlogin")
 					.failureUrl("/login?error=true")
 					.permitAll()
 				;
-			return http.build();
-	}
+	      return http.build();
+	  }
 
 	
 }

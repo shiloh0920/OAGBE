@@ -6,7 +6,7 @@
     <meta name="description" content="" />
  
 
-    <title>OGABE|頁面禁止</title>
+    <title>OGABE|後台管理登入</title>
     <link href="/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/dist/css/carousel.css" rel="stylesheet" />
     <link href="/dist/css/my.css" rel="stylesheet" />
@@ -130,15 +130,27 @@
     <main>
     <br>
     <div class="text-center mt-1">
-        <h1>OGABE頁面禁止</h1>
+        <h1>OGABE後台登入</h1>
     </div>
     
     <div class="row p-5" style="background-color: #EAE0DA;">
         <div class="col"></div>
         <div class="col">
-  		      
-        <h3>很抱歉, 你沒有資格進入此頁面!</h3>
-        <a href="/">回首頁</a>
+        <form th:action="@{/admin/user/perfomlogin}" method="post" name="login-form">
+            <div class="form-group col-sm-12">
+              <label for="exampleInputEmail1">帳號</label>
+              <input type="email" class="form-control" name="useremail" id="UserEmail1" placeholder="請輸入Email"  required>
+            </div><br>
+            <div class="form-group col-sm-12">
+              <label for="exampleInputPassword1">密碼</label>
+              <input type="password" class="form-control" name="userpassword" id="UserPassword1" placeholder="請輸入密碼">
+            </div><br>
+            
+            
+            
+            <button type="submit" class="btn btn-primary col-sm-5 ">登入</button>
+            
+        </form><br>
 
  
         </div>
@@ -160,6 +172,22 @@
       </p>
     </footer>
     <script src="dist/js/bootstrap.bundle.min.js"></script>
-
+    <script>
+    	const params = new URLSearchParams(window.location.search)
+    	if (params.get('error')=="true"){
+    		alert("登入失敗!!!"+"\n"+"請確認帳號密碼")
+    	}else if(params.get('resetpassword')=="success"){
+    		alert("密碼重設成功，請使用新密碼登入!!")
+    	}else if(params.get("register")=="success"){
+    		alert("註冊成功，請去信箱點擊驗證信成為正式會員!!")
+    	}else if(params.get("verify")=="success"){
+    		alert("會員驗證成功，恭喜成為正式會員!!")
+    	}else if(params.get("verify")=="fail"){
+    		alert("驗證失敗，請去登入頁面點擊重發驗證信!!")
+    	}else if(params.get("resetpassword")=="fail"){
+    		alert("已更改過密碼，若還需重設密碼請重新進行忘記密碼流程!!")
+    	}
+    	
+    </script>
   </body>
 </html>

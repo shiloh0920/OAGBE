@@ -151,7 +151,7 @@ public class UserController {
 			String mailContent = "<p>親愛的會員您好,</p>" + "本站已收到需要重新設定密碼的請求," + "請點擊下方連結設定新密碼: " + "<br>" + "<a href=\""
 					+ resetPasswordLink + "\" > 重設密碼 </a>" + "<br>" + "若不需重新設定請忽略此信件~";
 
-			new Thread(() -> {
+			//new Thread(() -> {
 				try {
 					emailService.sendEmail(email, resetPasswordLink, sender, mailSubject, mailContent);
 					m.addAttribute("message", "已寄送重設密碼的連結到您的信箱");
@@ -159,7 +159,7 @@ public class UserController {
 					m.addAttribute("message", "寄送失敗，請稍後在試");
 				}
 
-			}).start();
+			//}).start();
 
 		} catch (UserVONotFindException e) {
 			m.addAttribute("error", e.getMessage());
@@ -318,11 +318,11 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping("/resendUserVerficationEmail")
+	@GetMapping("userpage/resendUserVerficationEmail")
 	public String resendUserVerficationEmail(HttpServletRequest req, Model m) {
-		UserVO uservo = null;
+
 		UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		uservo = principal.getUservo();
+		UserVO uservo = userService.getUserById(principal.getUservo().getUserid());
 		if (uservo.getUserstatusvo().getStatusid()!=2) {
 			m.addAttribute("uservo", uservo);
 			return "redirect:/userpage?verification=already";

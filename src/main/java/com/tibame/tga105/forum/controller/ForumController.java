@@ -70,14 +70,21 @@ public class ForumController {
 	EmailServices emailServices;
 
 	@GetMapping("/read")
+	
 	public String read(Model model) {
 
 		return "forumRead";
 	}
 
 	@GetMapping("/read/{id}")
-	public String Read(@PathVariable Integer id, Model model) {
+	public String Read(@PathVariable Integer id, 
+						@RequestParam(name="value",required = false) Integer value,
+						Model model) {
 		ArticleEntity articleEntity = articleService.findById(id);
+		if(value!= null) {
+		ReportEntity report=reportService.findOne(value);
+		model.addAttribute("report", report);
+		}
 		
 		if(articleEntity !=null) {
 			articleEntity.setViewcount(articleEntity.getViewcount()+1);
@@ -96,19 +103,18 @@ public class ForumController {
 		List<ReplyEntity> list = replyService.find(articleEntity.getArticleid());
 		reply.setArticleEntity(articleEntity);
 		UserVO user = reply.getUserVo();
-//        List<ReplyEntity> list= articleEntity.getReplyEnitySet();
+
 		
 		List<CollectionEntity> coll=collectionService.find(uservo.getUserid());
 		System.out.println("-------------"+coll);
 		
-//        UserVO  user=articleEntity.getUserVo();
-		// 重構 articleEntity.setUserVo(user);
-		// 重構 User user1=articleEntity.getUser();
 
 		model.addAttribute("articleEntity", articleEntity);
 		model.addAttribute("lister", list);
         model.addAttribute("user",uservo);
         model.addAttribute("coll",coll);
+        
+        
 		return "forumRead";
 	}
 	
@@ -368,14 +374,46 @@ public class ForumController {
 		return "forumReportBackStage";
 	}
 	
+	@GetMapping("/forumBackStage")
+	public String forumBS() {
+		
+		return"forumBackStage";
+	}
 	@GetMapping("/forumReportCheck")
 	public String reportcheck(@RequestParam(name="value",required = true) Integer value,
 								Model model) {
-		model.addAttribute("", value);
-		articleService.findById(value);
+		
+		ArticleEntity articleEntity=articleService.findById(value);
+		model.addAttribute("articleObj",articleEntity );
 		
 		
 		return "forumReportCheck";
+	}
+	
+	@GetMapping("/reportCheck")
+	public String check(@RequestParam(name="reportid") Integer reportid,
+				   @RequestParam(name="articleid")Integer articleid,
+				   @RequestParam(name="administrator") String a,
+				   @RequestParam(name="result",required = true) Integer result,
+				   @RequestParam(name="check_result") String resultDetail,
+				   final RedirectAttributes r) {
+		ReportEntity reportEntity=reportService.findOne(reportid);
+		
+		if(reportEntity!=null) {
+			
+			reportEntity.setStatus(result);
+			reportEntity.setSign(a);
+			reportEntity.setRemark(resultDetail);
+			reportEntity.setSubmitdatetime(new Date());
+			reportService.add(reportEntity);
+			
+			r.addFlashAttribute("administrator", r);
+			r.addFlashAttribute("checkresult",resultDetail);
+			return "redirect:/reportBackstage";
+		}
+//		System.err.println(reportid+" "+articleid+" "+a+" "+result+" "+resultDetail);
+		
+		return "redirect/reportBackstage";
 	}
 	
 	@ResponseBody

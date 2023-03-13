@@ -56,7 +56,7 @@
       </span>
 
     </div>
-    <table class="table table-bordered table-striped table-hover ">
+    <table class="table table-bordered table-striped table-hover " th:if="${not #lists.isEmpty(list)}">
       <thead>
         <tr class="table-dark">
           <th>文章編號</th>
@@ -68,7 +68,7 @@
       </thead>
       <tbody>
         <tr th:each="article:${list}">
-          <td ><a th:text="${article.articleid}" th:href="@{/read/{id}(id=${article.articleid})}"  style="text-decoration: none;color: #EAE0DA;"></a></td>
+          <td ><a th:text="${article.articleid}" th:href="@{/read/{id}(id=${article.articleid})}"  style="text-decoration: none;color:black"></a></td>
           <td th:text="${article.articleTypeEntity.articletypedetail}"></td>
           <td th:text="${article.articletitle}"></td>
           <td th:text="${#dates.format(article.postdatetime,'yyyy-MM-dd HH:mm:ss')}"></td>
@@ -78,6 +78,7 @@
         </tr>
       </tbody>
     </table>
+    <h1 th:if="${#lists.isEmpty(list)}" th:text="該文章種類尚未有文章發布"></h1>
   </div>
 <script src="dist/js/bootstrap.bundle.min.js"></script>
 </html>
