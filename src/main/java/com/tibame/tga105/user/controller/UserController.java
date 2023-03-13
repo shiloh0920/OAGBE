@@ -60,6 +60,8 @@ public class UserController {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
+	
+	
 
 	@GetMapping("/")
 	public String home() {
