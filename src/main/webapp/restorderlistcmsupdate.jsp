@@ -216,7 +216,7 @@ RestOrderListVO restOrderListVO = (RestOrderListVO) request.getAttribute("restOr
 				<div class="h_center">
 					<input type="hidden" name="action" value="update"> <input
 						type="hidden" name="orderlistid"
-						value="${restOrderListVO.orderlistid}"> <input
+						value="${param.orderlistid}"> <input
 						type="submit" class="btn btn-warning" value="送出">
 				</div>			
 			</FORM>

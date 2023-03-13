@@ -26,7 +26,7 @@
       content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
     />
     <meta name="generator" content="Hugo 0.108.0" />
-    <title>OGABE|點餐後台</title>
+    <title>OGABE|訂單與訂單明細</title>
     <link href="dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="dist/css/carousel.css" rel="stylesheet" />
     <link href="dist/css/my.css" rel="stylesheet" />
@@ -241,7 +241,7 @@
         <thead>
           <tr>
            <th class="col rest_dish_select_qty">訂單編號</th>
-            <th class="col rest_dish_select_qty">會員編號與會員名稱</th>
+            <th class="col rest_dish_select_qty">會員編號</th>
             <th class="col rest_dish_select_qty">餐廳</th>
      		<th class="col rest_dish_select_qty">訂單狀態</th>
      		<th class="col rest_dish_select_qty">訂單備註</th>
@@ -252,26 +252,15 @@
 <%--         <c:forEach var="restOrderVO" items="${list}" > --%>
           <tr>
             <td>${param.orderid}</td>
-            <td>${param.userid}-[${restOrderVO.userVO.username}]</td>         
-            <td>${param.restid}-[${restOrderVO.restVO.restname}]</td>           
-            <td>${restOrderVO.orderstatusid}-[${restOrderVO.restOrderStatusVO.orderstatus}]</td>
+            <td>${userid}</td>
+            <td>${restname}</td>        
+            <td>${orderstatus}</td>
             <td>${param.ordermemo}</td>
             <td>${param.ordertime}</td>
       </tr>
 <%--          </c:forEach> --%>
        </tbody>
       </table>
-<!-- 		<FORM name="orderlistcheckout" ACTION="restOrderList.do" method="POST">       -->
-<!--       	<input type="hidden" name="action" value="getOne_For_Display"> -->
-<%-- 		<input type="hidden" name="orderid" value="${param.orderid}"> --%>
-<%-- 		<input type="hidden" name="userid" value="${param.userid}"> --%>
-<%-- 		<input type="hidden" name="dishid" value="${param.dishid}"> --%>
-<%-- 		<input type="hidden" name="dishprice" value="${param.dishprice}"> --%>
-<%-- 		<input type="hidden" name="dishqty" value="${param.dishity}"> --%>
-<%-- 		<input type="hidden" name="restid" value="${param.restid}"> --%>
-      
-<!--       </FORM> -->
-      
       
       <div class="container-fluid pt-5 px-5">  
       <h2 class="h_center">這是您的訂購項目</h2>      
@@ -299,7 +288,7 @@
 				%>
 				<tr>
 					<td class="col-2 "><%=dishname%></td>
-					<td class="col-2 rest_dish_select_price_color">$ <%=dishprice%></td>
+					<td class="col-2 ">$ <%=dishprice%></td>
 					<td class="col-1 "><%=dishity%></td>
 				</tr>
 
@@ -312,7 +301,7 @@
 <!-- 				<hr size="1" noshade="noshade" style="border:1px #cccccc dotted;"/> -->
 				<tr>
 					<td class="col"></td>
-<%-- 					<td class="col rest_dish_select_qty ">總金額:$<%=amount%></td> --%>
+					<td class="col rest_dish_select_price_color ">總金額:$<%=amount%></td>
 					<td class="col height-20 rest_dish_select_price_color"></td>
 				</tr>
 		</table>
