@@ -4,7 +4,13 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,9 +46,6 @@ import com.tibame.tga105.user.entity.UserVO;
 import com.tibame.tga105.user.security.UserPrincipal;
 import com.tibame.tga105.user.service.UserService;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletResponse;
-
 @Controller
 public class ForumController {
 	@Autowired
@@ -68,9 +71,10 @@ public class ForumController {
 	
 	@Autowired
 	EmailServices emailServices;
-
-	@GetMapping("/read")
 	
+	
+	
+	@GetMapping("/read")
 	public String read(Model model) {
 
 		return "forumRead";
@@ -154,30 +158,41 @@ public class ForumController {
 	 */
 	@PostMapping("/create")
 	public String create(final RedirectAttributes redirectAttributes, 
+						Model model,
 						@RequestParam String articletitle,
 						@RequestParam String articlecontext, 
 						@RequestParam(name = "articletypeid") Integer typeid, 
-						@RequestParam(name="file")MultipartFile file,
-						Model model
+						@RequestParam(name="file")MultipartFile file						
 						) throws IOException {
 		
-		List<String> error= new ArrayList<>();
-		if ("".equals(articletitle) || articletitle.trim().length()==0) {
+		
+		if (articletitle==null || articletitle.trim().length()==0) {
 			redirectAttributes.addFlashAttribute("errmsgs", "以下欄位不能為空");
-			error.add("文章標題不能為空");
+			
+			redirectAttributes.addFlashAttribute("title", "文章標題不能為空");
+			
+			
 			
 			
 		}
-		if ("".equals(articlecontext) || articlecontext.trim().length()==0) {
+		if (articlecontext ==null || articlecontext.trim().length()==0) {
 			redirectAttributes.addFlashAttribute("errmsgs", "以下欄位不能為空");
-			error.add("文章內容不能為空");
+			
+			redirectAttributes.addFlashAttribute("context", "文章內容不能為空");
+			
 			
 		}
-		if(!error.isEmpty()) {
+		if(articletitle.equals("") || articlecontext.equals("")) {
+			List<ArticleTypeEntity> articleEntityList = articleTypeService.findAll();
+			redirectAttributes.addFlashAttribute("articletitle", articletitle);
+			redirectAttributes.addFlashAttribute("articlecontext", articlecontext);
+			redirectAttributes.addFlashAttribute("articletypeid", typeid);
+			model.addAttribute("articleall", articleEntityList);
 			
-			redirectAttributes.addFlashAttribute("error",error);
+			
 			return "redirect:/forumPost";
-		}
+			}
+		
 		ArticleEntity articleEntity = new ArticleEntity();
 		UserVO uservo = null;
 		UserPrincipal principal1 = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication()
@@ -205,6 +220,12 @@ public class ForumController {
 	@PostMapping("/context")
 	public List<ArticleEntity> findByContext(@RequestParam String context) {
 		return articleService.findByS(context);
+	}
+	
+	@GetMapping("/adminTemplate")
+	public String adminTemplate() {
+		
+		return"adminTemplate";
 	}
 
 	/*
@@ -361,6 +382,14 @@ public class ForumController {
 		return "redirect:/forum";
 	}
 	
+	@GetMapping("/likesCountBackstage")
+	public String likesCount() {
+		
+		
+		return "forumLikesCount";
+	}
+	
+	
 	@GetMapping("/reportBackstage")
 	public  String reportBackStage(@RequestParam(defaultValue = "0") int page,
 								   @RequestParam(defaultValue = "10") int size,
@@ -375,9 +404,26 @@ public class ForumController {
 	}
 	
 	@GetMapping("/forumBackStage")
-	public String forumBS() {
+	public String forumBS(Model model) {
+		
+		List<ArticleEntity> list=articleService.findHotArticle();
+		
+		model.addAttribute("list", list);
+		
 		
 		return"forumBackStage";
+	}
+	@GetMapping("/recommend/{id}")
+	public String recommend(@PathVariable(name="id") Integer id,
+							HttpSession session) {
+		
+		ArticleEntity articleEntity=articleService.findById(id);
+		if(articleEntity!=null) {
+			
+			session.setAttribute("article", articleEntity);
+		}
+		
+		return"redirect:/forum";
 	}
 	@GetMapping("/forumReportCheck")
 	public String reportcheck(@RequestParam(name="value",required = true) Integer value,
@@ -398,14 +444,17 @@ public class ForumController {
 				   @RequestParam(name="check_result") String resultDetail,
 				   final RedirectAttributes r) {
 		ReportEntity reportEntity=reportService.findOne(reportid);
-		
+		ArticleEntity articleEntity=articleService.findById(articleid);
 		if(reportEntity!=null) {
 			
 			reportEntity.setStatus(result);
 			reportEntity.setSign(a);
 			reportEntity.setRemark(resultDetail);
 			reportEntity.setSubmitdatetime(new Date());
+			articleEntity.setActivestatusid(2);
+			
 			reportService.add(reportEntity);
+			articleService.add(articleEntity);
 			
 			r.addFlashAttribute("administrator", r);
 			r.addFlashAttribute("checkresult",resultDetail);

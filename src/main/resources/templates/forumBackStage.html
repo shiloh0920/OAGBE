@@ -22,6 +22,7 @@
     <div class="forum_list" style="background-color: #EAE0DA;">
       <h1>論壇後台系統</h1>
     </div>
+   <div style="display:flex;flex-wrap:wrap;">
   <div class="card" style="width: 21rem;">
   <img src="/images/coffeesohp2.jpg" class="card-img-top" alt="...">
   <div class="card-body">
@@ -30,40 +31,67 @@
     <a th:href="@{/reportBackstage}" class="btn btn-primary">查看</a>
   </div>
 </div>
-    <table class="table table-bordered table-striped table-hover " th:unless="${#lists.isEmpty(list)}">
-      <thead>
-        <tr class="table-dark">
-          <th>檢舉編號</th>
-          <th>檢舉種類</th>
-          <th>檢舉詳述</th>
-          <th>檢舉時間</th>
-          <th>審核狀態</th>
-          <th></th>
-      </thead>
-      <tbody>
-        <tr  th:each="report:${list}">
-          <td th:text="${report.reportid}"></td>
-          <td th:text="${report.reportTypeEntity.reporttypedetail}"></td>
-          <td th:text="${report.reportdetail}"></td>
-          <td th:text="${#dates.format(report.reportdatetime,'yyyy-MM-dd')}"></td>
-          <td th:if="${report.status==0}" th:text="處理中"></td>
-         	<td th:if="${report.status!=0}">確認中</td>
-         	<td>
-         	<button class="btn btn-outline-secondary">
-         	<a th:href="@{/read/{id}(id=${report.articleEntity.articleid})}"  style="text-decoration:none;color:grey">查看
-         	</a>
-         	</button>
-         	</td>
-        </tr>
-      </tbody>
-    </table>
-<!--     <nav> -->
-<!--       <ul class="pagination" style="float: right">                    報錯原因不明 -->
-<!--         <li class="page-item"><a class="page-link" href="#" th:href="@{'/reportBackstage?page='+ ${page.number-1}}" th:unless="${page.first}">上一頁</a></li> -->
-<!--         <li class="page-item"><a class="page-link" href="#" th:href="@{'/reportBackstage?page='+${page.number+1}}" th:unless="${page.last}">下一頁</a></li> -->
-<!--       </ul> -->
-<!--     </nav> -->
+  <div class="card" style="width:21rem;margin-left: 20px">
+  <img src="/images/coffeesohp6dark.jpg" class="card-img-top" height="265px" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">文章人氣</h5>
+    <P class="card-text">人氣文章前五名</P>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+ 查看
+</button>
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">人氣文章</h5>
+      </div>
+      <div class="modal-body" style="text-align:center;justify-content:space-between;">
+		<table class="table table-bordered table-striped table-hover" >
+			<thead>
+					<th>排序</th>
+					<th>文章編號</th>
+					<th>文章標題</th>
+					<th>按讚數</th>	
+					<th></th>
+			</thead>
+			<tbody>
+				<tr th:each="l,iterStat:${list}">
+					<td th:text="${iterStat.count}"></td>
+					<td th:text="${l.articleid}"></td>
+					<td th:text="${l.articletitle}" ></td>
+					<td th:text="${l.likecount}" th:style="${iterStat.count==1 ? 'color: red;' : iterStat.count==2 ? 'color: orange;' : iterStat.count==3 ? 'color: blue;' :''}"
+></td>
+					<td><button class="btn btn-outline-secondary" >
+         			 <a th:href="@{/recommend/{id}(id=${l.articleid})}" style="text-decoration: none;">推薦</a>
+          			</button>
+          			</td>
+				</tr>
+			</tbody>
+		</table>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+ <div class="card" style="width: 21rem;margin-left: 20px">
+  <img src="/images/coffeesohp4.jpg" class="card-img-top" height="265px" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">文章觀看數</h5>
+    <p class="card-text">點選查看文章瀏覽次數</p>
+    <a th:href="@{/reportBackstage}" class="btn btn-primary">查看</a>
+  </div>
+</div>
+</div>
+  
   </div>
 <script src="dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 </body>
 </html>

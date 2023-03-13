@@ -26,19 +26,28 @@
     <form action="/create" method="post" enctype="multipart/form-data">
         <div class="mb-1">
             <label for="article_title" class="form-label">文章標題</label>
-            <input type="text" class="form-control" id="article_title" name="articletitle" >
-            <p class="form-control-static text-danger" th:text="${error}"  th:unless="${#lists.isEmpty(error)}"></p>
+            <div th:if="${title!=null}">
+            <input type="text" class="form-control" id="article_title" name="articletitle" th:value="${articletitle}" >
+            </div>
+            <div th:if="${title==null}">
+            <input type="text" class="form-control" id="article_title" name="articletitle" th:value="${articletitle}" >
+            </div>
+            <div th:unless="${title==null}" >
+            <p class="form-control-static text-danger" th:text="${title}" ></p>
+            </div>
         </div>
         <div class="mb-1">
             <label for="article_type_id" class="form-label" >文章類型</label>
             <select class="form-select" aria-label="article_type" id="article_type_id" name="articletypeid" >
-                <option th:each="article:${articleall}" th:value="${article.articletypeid}" th:text="${article.articletypedetail}"></option>
+                <option th:each="article:${articleall}" th:value="${article.articletypeid}" th:text="${article.articletypedetail}" th:selected="${article.articletypeid==articletypeid}"></option>
             </select>
         </div>
         <div class="mb-1">
             <label for="article_content" class="form-label">文章內容</label>
-            <textarea class="form-control" id="article_content" rows="10" name="articlecontext"></textarea>
-            <p class="form-control-static text-danger" th:text="${error}" th:unless="${#lists.isEmpty(error)}"></p>
+            <textarea class="form-control" id="article_content" rows="10" name="articlecontext" th:text="${articlecontext}"></textarea>
+            <div th:unless="${context==null}" >
+            <p class="form-control-static text-danger" th:text="${context}" ></p>
+            </div>
         </div>
         <div>
             <input type="file" name="file" id="p_file">

@@ -85,5 +85,9 @@ public class ArticleService {
     public List<ArticleEntity> findtype(Integer id){
     	return articleRepository.findByArticleTypeId(id);
     }
+    
+    public List<ArticleEntity> findHotArticle(){
+    	return articleRepository.findArticlePopularity();
+    }
     }
 
