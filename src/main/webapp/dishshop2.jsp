@@ -40,7 +40,7 @@ pageContext.setAttribute("set", set);
 			class="navbar navbar-expand-md fixed-top navbar-dark bg-headercolor"
 			aria-label="Fourth navbar example">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="index.html"><img
+				<a class="navbar-brand" href="index"><img
 					src="images\ogabecolor.png" alt="Ogabe Logo" /></a>
 				<button class="navbar-toggler" type="button"
 					data-bs-toggle="collapse" data-bs-target="#navbarsExample04"
@@ -163,7 +163,7 @@ pageContext.setAttribute("set", set);
 			<div class="row">
 				<c:forEach var="dishVO" items="${set}">
 					<div class="col-lg-3 text-center">
-						<form name="shoppingForm" action="Shopping.html" method="POST">
+						<form name="shoppingForm" action="Shopping" method="POST">
 							<div>
 
 								<p>

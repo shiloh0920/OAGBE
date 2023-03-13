@@ -75,10 +75,9 @@ public class SecurityConfig {
 //				;
 //			return http.build();
 //	}
-	@Bean
-	  @Order(1)                                                        
+	@Bean                                                       
 	  public SecurityFilterChain adminLoginFilterChain(HttpSecurity http) throws Exception {
-	      http
+	      http.csrf().disable()
 	      	  	.mvcMatcher("/admin/**") 
 	      	  	.authorizeHttpRequests()                                  
 	      	  	.antMatchers("/admin/**")
@@ -98,13 +97,18 @@ public class SecurityConfig {
 	      return http.build();
 	  }
 
-	  @Bean                                                            
+	  @Bean      
+	  @Order(1)
 	  public SecurityFilterChain userLoginFilterChain(HttpSecurity http) throws Exception {
-	      http
+	      http.csrf().disable()
 	      		.authorizeHttpRequests()
 				.antMatchers("/userpage/**")
 				.hasAnyAuthority("USER","ADMIN","UNCERTIFIED")
-				.antMatchers("/","/login","/**")
+				
+				.antMatchers("/restOrder.do/**")
+				.hasAnyAuthority("USER")
+				
+				.antMatchers("/","/login","/Shopping","/**")
 			    .permitAll()
 			    .and()
 			    .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
