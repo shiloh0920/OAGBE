@@ -57,12 +57,15 @@
 			<tbody>
 				<tr th:each="l,iterStat:${list}">
 					<td th:text="${iterStat.count}"></td>
-					<td th:text="${l.articleid}"></td>
+					<td >
+         			 <a th:href="@{/read/{id}(id=${l.articleid})}" th:text="${l.articleid}" style="text-decoration:none;color:black"></a></td>
 					<td th:text="${l.articletitle}" ></td>
 					<td th:text="${l.likecount}" th:style="${iterStat.count==1 ? 'color: red;' : iterStat.count==2 ? 'color: orange;' : iterStat.count==3 ? 'color: blue;' :''}"
-></td>
+></td>				
+					</td>
 					<td><button class="btn btn-outline-secondary" >
          			 <a th:href="@{/recommend/{id}(id=${l.articleid})}" style="text-decoration: none;">推薦</a>
+          			</button>
           			</button>
           			</td>
 				</tr>
@@ -78,13 +81,55 @@
 </div>
 </div>
 </div>
- <div class="card" style="width: 21rem;margin-left: 20px">
-  <img src="/images/coffeesohp4.jpg" class="card-img-top" height="265px" alt="...">
+  <div class="card" style="width:21rem;margin-left: 20px">
+  <img src="/images/coffeesohp5.jpg" class="card-img-top" height="265px" alt="...">
   <div class="card-body">
-    <h5 class="card-title">文章觀看數</h5>
-    <p class="card-text">點選查看文章瀏覽次數</p>
-    <a th:href="@{/reportBackstage}" class="btn btn-primary">查看</a>
+    <h5 class="card-title">文章瀏覽次數</h5>
+    <P class="card-text">查看文章瀏覽數</P>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong1">
+ 查看
+</button>
+<div class="modal fade" id="exampleModalLong1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">高瀏覽文章</h5>
+      </div>
+      <div class="modal-body" style="text-align:center;justify-content:space-between;">
+		<table class="table table-bordered table-striped table-hover" >
+			<thead>
+					<th>排序</th>
+					<th>文章編號</th>
+					<th>文章標題</th>
+					<th>瀏覽數</th>	
+					<th></th>
+			</thead>
+			<tbody>
+				<tr th:each="v,iterStat:${views}">
+					<td th:text="${iterStat.count}"></td>
+					<td >
+         			 <a th:href="@{/read/{id}(id=${v.articleid})}" th:text="${v.articleid}" style="text-decoration:none;color:black"></a></td>
+					<td th:text="${v.articletitle}" ></td>
+					<td th:text="${v.viewcount}" th:style="${iterStat.count==1 ? 'color: red;' : iterStat.count==2 ? 'color: orange;' : iterStat.count==3 ? 'color: blue;' :''}"
+></td>				
+					</td>
+					<td><button class="btn btn-outline-secondary" >
+         			 <a th:href="@{/recommend/{id}(id=${v.articleid})}" style="text-decoration: none;">推薦</a>
+          			</button>
+          			</button>
+          			</td>
+				</tr>
+			</tbody>
+		</table>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+      </div>
+    </div>
   </div>
+</div>
+</div>
 </div>
 </div>
   

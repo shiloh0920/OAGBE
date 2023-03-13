@@ -69,7 +69,7 @@ public class ArticleEntity {
     @Column(name="like_count",nullable = false,columnDefinition = "INT default 0")
     private Integer likecount;
     
-    @Column(name="activestatus_id",nullable = false,columnDefinition = "INT default 1")
+    @Column(name="activestatus_id",nullable = false,columnDefinition = "INT default 1",insertable = false)
     private Integer activestatusid;
     
     

@@ -89,5 +89,10 @@ public class ArticleService {
     public List<ArticleEntity> findHotArticle(){
     	return articleRepository.findArticlePopularity();
     }
+    
+    public List<ArticleEntity> findViews(){
+    	
+    	return articleRepository.findArticleView();
+    }
     }
 

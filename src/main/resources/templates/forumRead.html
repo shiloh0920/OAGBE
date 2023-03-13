@@ -109,7 +109,7 @@
 <!--     </span> -->
     <span style="display: inline-block;" th:unless="${user.userstatusvo.statusid==1}">
      <a th:href="@{/forumaddLike(value=${articleEntity.articleid})}" > 
-     <button type="button" class="btn btn-outlineprimary" data-bs-toggle="modal" data-bs-target="#systemnote">
+     <button type="button" class="btn btn-outlineprimary" data-bs-toggle="modal" data-bs-target="#systemnote" onclick="addLike(this)">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
   		<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
 		</svg>我要點讚
@@ -175,6 +175,7 @@
     <div class="forum_btn">
       <button type="submit" class="btn btn-outline-secondary" th:if="${user.userstatusvo.statusid !=1}" th:text="發布留言"> 提交</button>
       <a href="/forum" class="btn btn-outline-secondary" th:if="${user.userstatusvo.statusid !=1}" >返回文章列表</a>
+      <a href="/forumBackStage" class="btn btn-outline-secondary" th:if="${user.userstatusvo.statusid ==1}" style="margin-top:10px" >返回論壇後台</a>
     </div>
     
   </form >
@@ -231,6 +232,13 @@
       $('input[type="checkbox"]').not(this).prop('checked', false);
     });
   });
+  
+  function addLike(button) {
+	  button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16"><path d="m8 15c-4.546-4.183-15.157-10.206-8-13.857 6.962-3.496 14.882 6.674 8 13.857zm-.902-2.145-4.097-4.211c-1.51-1.552-.572-4.131 1.636-4.131h8.976c2.209 0 3.146 2.579 1.636 4.131l-4.097 4.211a1.502 1.502 0 0 1-2.267 0z"/></svg>你已點讚';
+	  button.disabled = true;
+	
+	}
+
 </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>

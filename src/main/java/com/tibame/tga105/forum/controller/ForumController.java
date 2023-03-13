@@ -321,6 +321,7 @@ public class ForumController {
 		model.addAttribute("list",list);
 		return"forumType";
 	}
+	
 	@GetMapping("/forumaddLike")
 	public String like(@RequestParam(name="value",required = true) Integer articleid) {
 		ArticleEntity a=articleService.findById(articleid);
@@ -407,8 +408,10 @@ public class ForumController {
 	public String forumBS(Model model) {
 		
 		List<ArticleEntity> list=articleService.findHotArticle();
+		List<ArticleEntity> views=articleService.findViews();
 		
 		model.addAttribute("list", list);
+		model.addAttribute("views",views);
 		
 		
 		return"forumBackStage";
@@ -456,11 +459,24 @@ public class ForumController {
 			reportService.add(reportEntity);
 			articleService.add(articleEntity);
 			
+			SimpleMailMessage mailMessage = new SimpleMailMessage();
+			mailMessage.setTo(reportEntity.getUservo().getUseremail());
+			mailMessage.setSubject("OGABE系統通知");
+			mailMessage.setFrom("tibame105ogabe@gmail.com");
+			if(result==1) {
+			mailMessage.setText("提醒您,您檢舉的文章已審核完畢,已將該文章下架");
+			System.err.println("---------------------");
+			}
+			if(result==2) {
+				mailMessage.setText("提醒您,您檢舉的文章已審核完畢,檢舉不成立的原因 :"+resultDetail);
+				System.err.println("---------------------");
+			}
+			emailServices.sendEmail(mailMessage);
 			r.addFlashAttribute("administrator", r);
 			r.addFlashAttribute("checkresult",resultDetail);
 			return "redirect:/reportBackstage";
 		}
-//		System.err.println(reportid+" "+articleid+" "+a+" "+result+" "+resultDetail);
+
 		
 		return "redirect/reportBackstage";
 	}
