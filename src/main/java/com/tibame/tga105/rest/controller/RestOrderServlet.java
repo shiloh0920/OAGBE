@@ -131,11 +131,17 @@ public class RestOrderServlet extends HttpServlet{
 				Integer orderid = Integer.valueOf(req.getParameter("orderid").trim());
 				
 				
+//				Integer userid = null;
+//				try {
+//					userid = Integer.valueOf(req.getParameter("userid").trim());
+//				} catch (NumberFormatException e) {
+//					errorMsgs.put("userid","會員編號請填數字");
+//				}
+				
 				Integer userid = null;
-				try {
-					userid = Integer.valueOf(req.getParameter("userid").trim());
-				} catch (NumberFormatException e) {
-					errorMsgs.put("userid","會員編號請填數字");
+				Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				if (principal instanceof UserPrincipal) {
+				    userid = ((UserPrincipal) principal).getUservo().getUserid();
 				}
 				
 				Integer restid = null;

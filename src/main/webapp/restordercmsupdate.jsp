@@ -243,20 +243,22 @@ RestOrderVO restOrderVO = (RestOrderVO) request.getAttribute("restOrderVO");
 <FORM METHOD="post" ACTION="restOrder.do" name="form1">
 	<div class="mb-3">
 	<div class="rest_dish_select_qty">訂單編號:<font color=red><b> * </b></font>${param.orderid}</div>
-		
+	<div class="rest_dish_select_qty">會員編號:<font color=red><b> * </b></font>${param.userid}</div>	
 	</div>
 	
-<jsp:useBean id="userSvc" scope="page" class="com.tibame.tga105.user.service.UserService" />
-	<div class="mb-3">
-		<div class="rest_dish_select_qty">會員:
-		<label for="InputRestorderid" class="form-label">		
-		<select class="form-select" size="1" name="userid" id="InputRestorderid">
-			<c:forEach var="userVO" items="${userSvc.all}">
-				<option value="${userVO.userid}" ${(param.userid==userVO.userid)? 'selected':'' } >${userVO.username}
-			</c:forEach>
-		</select></label>
-		</div>
-	</div>
+<%-- <jsp:useBean id="userSvc" scope="page" class="com.tibame.tga105.user.service.UserService" /> --%>
+<!-- 	<div class="mb-3"> -->
+<!-- 		<div class="rest_dish_select_qty">會員: -->
+<!-- 		<label for="InputRestorderid" class="form-label">		 -->
+<!-- 		<select class="form-select" size="1" name="userid" id="InputRestorderid"> -->
+<%-- 			<c:forEach var="userVO" items="${userSvc.all}"> --%>
+<%-- 				<option value="${userVO.userid}" ${(param.userid==userVO.userid)? 'selected':'' } >${userVO.username} --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</select></label> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+
+
 	<jsp:useBean id="restSvc" scope="page" class="com.tibame.tga105.rest.restmodel.RestService" />
 	<div class="mb-3">
 		<div class="rest_dish_select_qty">餐廳:
@@ -301,7 +303,7 @@ RestOrderVO restOrderVO = (RestOrderVO) request.getAttribute("restOrderVO");
 	<br>
 	<div class="h_center">
 	<input type="hidden" name="action" value="update">
-	<input type="hidden" name="orderid" value="${restOrderVO.orderid}">
+	<input type="hidden" name="orderid" value="${param.orderid}">
 	<input type="submit" class="btn btn-warning" value="送出"></FORM>
 	</div>
 </div>
@@ -326,4 +328,28 @@ RestOrderVO restOrderVO = (RestOrderVO) request.getAttribute("restOrderVO");
     </footer>
     <script src="dist/js/bootstrap.bundle.min.js"></script>
   </body>
+  
+  <link   rel="stylesheet" type="text/css" href="datetimepicker/jquery.datetimepicker.css" />
+<script src="datetimepicker/jquery.js"></script>
+<script src="datetimepicker/jquery.datetimepicker.full.js"></script>
+
+<style>
+  .xdsoft_datetimepicker .xdsoft_datepicker {
+           width:  300px;   /* width:  300px; */
+  }
+  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+           height: 151px;   /* height:  151px; */
+  }
+</style>
+
+<script>
+        $.datetimepicker.setLocale('zh'); 
+        $('#InputRestorderid3').datetimepicker({
+           theme: '',          
+           timepicker: true,  
+           step: 1,            
+	       format: 'Y-m-d H:i:s',
+	       value: new Date(),
+        });
+</script>
 </html>
