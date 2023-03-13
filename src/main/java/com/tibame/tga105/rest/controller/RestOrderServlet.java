@@ -210,6 +210,8 @@ public class RestOrderServlet extends HttpServlet{
 			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			if (principal instanceof UserPrincipal) {
 			    userid = ((UserPrincipal) principal).getUservo().getUserid();
+			}else if (userid == null) {
+				res.sendRedirect("/login");
 			}
 			
 //			System.err.println(uservo.getUserid());

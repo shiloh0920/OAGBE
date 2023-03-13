@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.tibame.tga105.rest.dishmodel.DishVO;
-@WebServlet("/Shopping.html")
+@WebServlet("/Shopping")
 public class ShoppingServlet extends HttpServlet{
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

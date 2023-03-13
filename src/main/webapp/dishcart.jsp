@@ -57,7 +57,7 @@
 			<td class="col-2 ">$ <%=order.getDishprice()%></td>
 			<td class="col-1 "><%=order.getDishity()%></td>
 			<td class="col-1 ">
-				<form name="deleteForm" action="Shopping.html" method="POST">
+				<form name="deleteForm" action="Shopping" method="POST">
 					<input type="hidden" name="action" value="DELETE"> <input
 						type="hidden" name="del" value="<%=index%>"> <input
 						type="submit" value="移除" class="btn btn-danger">
@@ -71,7 +71,7 @@
 			</table>
 		</div>
 		<p>
-		<form name="checkoutForm" action="Shopping.html" method="POST">
+		<form name="checkoutForm" action="Shopping" method="POST">
 			<input type="hidden" name="action" value="CHECKOUT"> 
 			<input type="hidden" name="dishid" value="${param.dishid}">
 			<input type="hidden" name="dishprice" value="${param.dishprice}">
