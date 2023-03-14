@@ -69,10 +69,20 @@ public class ArticleEntity {
     @Column(name="like_count",nullable = false,columnDefinition = "INT default 0")
     private Integer likecount;
     
-   
+    @Column(name="activestatus_id",nullable = false,columnDefinition = "INT default 1",insertable = false)
+    private Integer activestatusid;
     
     
     
+    
+	public Integer getActivestatusid() {
+		return activestatusid;
+	}
+
+	public void setActivestatusid(Integer activestatusid) {
+		this.activestatusid = activestatusid;
+	}
+
 	public List<ReportEntity> getReportEntity() {
 		return reportEntity;
 	}

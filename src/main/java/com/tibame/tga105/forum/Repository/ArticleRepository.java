@@ -35,5 +35,11 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity,Integer> 
 
     @Query(value = "select * from article where articletypeid=? ", nativeQuery = true)
     List<ArticleEntity> findByArticleTypeId(Integer articletypeid);
+    
+    @Query(value = "SELECT * FROM article order by like_count desc limit 5 ", nativeQuery = true)
+    List<ArticleEntity> findArticlePopularity();
+    
+    @Query(value = "SELECT * FROM article order by view_count desc limit 5 ", nativeQuery = true)
+    List<ArticleEntity> findArticleView();
 }
 

@@ -16,6 +16,46 @@
     <link href="/dist/css/guideline.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
  </head>
+ <style>
+ .box {
+            width: 300px;
+            margin: 0 auto;
+            border: 10px solid grey;
+            border-radius:10px;
+            overflow: hidden;
+        }
+ 
+        .animate {
+            padding-left: 20px;
+            font-size: 20px;
+            color: #000;
+            display: inline-block;
+            white-space: nowrap;
+            animation: 5s wordsLoop linear infinite normal;
+        }
+ 
+        @keyframes wordsLoop {
+            0% {
+                transform: translateX(200px);
+                -webkit-transform: translateX(200px);
+            }
+            100% {
+                transform: translateX(-100%);
+                -webkit-transform: translateX(-100%);
+            }
+        }
+ 
+        @-webkit-keyframes wordsLoop {
+            0% {
+                transform: translateX(200px);
+                -webkit-transform: translateX(200px);
+            }
+            100% {
+                transform: translateX(-100%);
+                -webkit-transform: translateX(-100%);
+            }
+        }
+ </style>
 <body>
 <div th:insert="/forumindex"></div>
   <div class="container">
@@ -27,6 +67,9 @@
       <strong>歡迎來到OGABE論壇，很高興遇見您～</strong>
       <span th:text="${success}"></span>
     </div>
+   		<div th:each="article : ${session.article}" class="box">
+      <span  th:text="'管理員推薦文章 < '+${article.articletitle}+' >'" class="animate" style="color:red"></span>
+     	</div>
       <div class="alert alert-dark alert-dismissible" th:unless="${#strings.isEmpty(report)}">
       <a class="close" data-bs-dismiss="alert">&times;</a>
       <strong th:text="${report}"></strong>
@@ -41,8 +84,8 @@
       <span  th:text="${user.username}+'歡迎來到OGABE論壇，很高興遇見您～'"></span>
      	</div>
 			<div style="margin-top: 10px; margin-bottom:20px" >
-			<span th:each="u:${update}" th:if="${u.updatetime} != ${u.postdatetime}">&rarr;</span><a th:each="u:${update}" th:if="${u.updatetime} != ${u.postdatetime}" th:text="'  <'+${u.articletitle}+'>,'" style="color:blue; text-decoration:none" th:href="@{/read/{id}(id=${u.articleid})}"></a>
-			<span th:each="u:${update}" th:if="${u.updatetime} != ${u.postdatetime}"   th:text="近期更新趕快瀏覽吧+'~'"></span>
+			<span >&rarr;</span><a th:each="u:${update}" th:if="${u.updatetime} != ${u.postdatetime}" th:text="'  <'+${u.articletitle}+'>,'" style="color:blue; text-decoration:none" th:href="@{/read/{id}(id=${u.articleid})}"></a>
+			<span th:text="近期更新趕快瀏覽吧+'~'"></span>
 			</div>
     <div class="forum_article_type">
     <span>
@@ -87,13 +130,14 @@
       </thead>
       <tbody>
         <tr th:each="article:${page.content}">
+        <div th:if="${article.activestatusid==1}">
           <td ><a th:text="${article.articleid}" th:href="@{/read/{id}(id=${article.articleid})}"  style="text-decoration: none;color: grey;"></a></td>
           <td th:text="${article.articleTypeEntity.articletypedetail}"></td>
           <td th:text="${article.articletitle}"></td>
           <td th:text="${#dates.format(article.postdatetime,'yyyy-MM-dd HH:mm:ss')}"></td>
           <td th:if="${article.postdatetime}==${article.updatetime}" th:text="截止此刻作者尚未更新內容" ></td>
           <td th:if="${article.postdatetime}!=${article.updatetime}" th:text="'更新於 '+${#dates.format(article.updatetime,'yyyy-MM-dd HH:mm:ss')}" style="color: red;"></td>
-<!--          <a  href="/read" th:href="@{/read}" class="link-danger">瀏覽</a>-->
+          </div>
         </tr>
       </tbody>
     </table>
