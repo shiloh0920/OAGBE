@@ -75,6 +75,7 @@ public class SecurityConfig {
 //				;
 //			return http.build();
 //	}
+	@Order(1)
 	@Bean                                                       
 	  public SecurityFilterChain adminLoginFilterChain(HttpSecurity http) throws Exception {
 	      http.csrf().disable()
@@ -98,7 +99,6 @@ public class SecurityConfig {
 	  }
 
 	  @Bean      
-	  @Order(1)
 	  public SecurityFilterChain userLoginFilterChain(HttpSecurity http) throws Exception {
 	      http.csrf().disable()
 	      		.authorizeHttpRequests()
@@ -121,6 +121,12 @@ public class SecurityConfig {
 					.loginProcessingUrl("/perfomlogin")
 					.failureUrl("/login?error=true")
 					.permitAll()
+					.and()
+				    .logout()
+				    .logoutUrl("/user/logout")
+				    .logoutSuccessUrl("/?loggedout")
+				    .invalidateHttpSession(true)
+				    .deleteCookies("JSESSIONID");
 				;
 	      return http.build();
 	  }
