@@ -63,7 +63,7 @@
 					<td th:text="${l.likecount}" th:style="${iterStat.count==1 ? 'color: red;' : iterStat.count==2 ? 'color: orange;' : iterStat.count==3 ? 'color: blue;' :''}"
 ></td>				
 					</td>
-					<td><button class="btn btn-outline-secondary" >
+					<td><button class="btn btn-outline-secondary" id="recommend">
          			 <a th:href="@{/recommend/{id}(id=${l.articleid})}" style="text-decoration: none;">推薦</a>
           			</button>
           			</button>
@@ -108,12 +108,12 @@
 				<tr th:each="v,iterStat:${views}">
 					<td th:text="${iterStat.count}"></td>
 					<td >
-         			 <a th:href="@{/read/{id}(id=${v.articleid})}" th:text="${v.articleid}" style="text-decoration:none;color:black"></a></td>
+         			 <a th:href="@{/read/{id}(id=${v.articleid})}" th:text="${v.articleid}" style="text-decoration:none;color:black" id="id"></a></td>
 					<td th:text="${v.articletitle}" ></td>
 					<td th:text="${v.viewcount}" th:style="${iterStat.count==1 ? 'color: red;' : iterStat.count==2 ? 'color: orange;' : iterStat.count==3 ? 'color: blue;' :''}"
 ></td>				
 					</td>
-					<td><button class="btn btn-outline-secondary" >
+					<td><button class="btn btn-outline-secondary" id="recommend" >
          			 <a th:href="@{/recommend/{id}(id=${v.articleid})}" style="text-decoration: none;">推薦</a>
           			</button>
           			</button>
@@ -132,8 +132,16 @@
 </div>
 </div>
 </div>
-  
-  </div>
+ </div>
+ <script th:inline="javascript">
+ var col=document.querySelector('#id').innerText;
+ document.querySelector('#recommend').addEventListener("click",function(event){
+		event.preventDefault();
+		if(confirm("確定推薦嗎")){
+			 window.location.href =`/recommend/`+ col
+		}
+	});
+ </script>
 <script src="dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>

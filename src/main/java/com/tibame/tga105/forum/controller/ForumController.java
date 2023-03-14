@@ -271,9 +271,9 @@ public class ForumController {
 
 	@RequestMapping("/forum")
 	public String index(@RequestParam(defaultValue = "0") int page,
-						@RequestParam(defaultValue = "5") int size,
+						@RequestParam(defaultValue = "10") int size,
 						Model model) {
-		Sort sort = Sort.by(Sort.Direction.DESC, "postdatetime");
+		Sort sort = Sort.by(Sort.Direction.DESC, "articleid");
 		Page<ArticleEntity> pages = articleService.findAllByPage(PageRequest.of(page, size, sort));
 		// List<ArticleEntity> articleEntityList =articleService.findAll();
 		model.addAttribute("page", pages);
@@ -299,6 +299,52 @@ public class ForumController {
 		
 		
 	}
+	
+	
+	
+	@GetMapping("/sort/{id}" )
+	public String sort(@PathVariable("id")Integer id,
+					   @RequestParam(defaultValue = "0") int page,
+					   @RequestParam(defaultValue = "10") int size,
+						Model model) {
+		UserVO uservo = null;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		if (principal instanceof UserPrincipal) {
+			uservo = userService.getUserByEmail(((UserPrincipal) principal).getUsername());
+		} 
+		switch(id) {
+		case 1: 
+			Sort sort1 = Sort.by(Sort.Direction.DESC, "postdatetime");
+			Page<ArticleEntity> pages1 = articleService.findAllByPage(PageRequest.of(page, size,sort1));
+			model.addAttribute("page", pages1);
+			model.addAttribute("id", id);
+		break;
+		case 2:
+			Sort sort2 = Sort.by(Sort.Direction.DESC, "updatetime");
+			Page<ArticleEntity> pages2 = articleService.findAllByPage(PageRequest.of(page, size,sort2));
+			model.addAttribute("page", pages2);
+		break;
+		
+		case 3:
+			Sort sort3 = Sort.by(Sort.Direction.DESC, "likecount");
+			Page<ArticleEntity> pages3 = articleService.findAllByPage(PageRequest.of(page, size,sort3));
+			model.addAttribute("page", pages3);
+			break;
+		
+		case 4:
+			Sort sort4 = Sort.by(Sort.Direction.DESC, "viewcount");
+			Page<ArticleEntity> pages4 = articleService.findAllByPage(PageRequest.of(page, size,sort4));
+			model.addAttribute("page", pages4);
+			break;
+			
+		}
+		List<ArticleEntity> update=articleService.findAll();
+		model.addAttribute("update",update);
+		model.addAttribute("user", uservo);
+		return "forumSort";
+	}
+	
 	@GetMapping("/forum/{id}")
 	public String articleid(@PathVariable(name="id") Integer id,
 							@RequestParam(defaultValue = "0") int page,
@@ -315,7 +361,8 @@ public class ForumController {
 		if (principal instanceof UserPrincipal) {
 			uservo = userService.getUserByEmail(((UserPrincipal) principal).getUsername());
 		} 
-		
+		List<ArticleEntity> update=articleService.findAll();
+		model.addAttribute("update",update);
 		model.addAttribute("user", uservo);
 		model.addAttribute("page", pages);
 		model.addAttribute("list",list);
@@ -345,7 +392,7 @@ public class ForumController {
 	}
 	@GetMapping("/addReport")
 	public String addReport (@RequestParam(name="value",required = false) Integer articleid,
-							 @RequestParam(name="articleid") Integer id,
+							 @RequestParam(name="articleid") String id,
 							 @RequestParam(name="reporttypeid") Integer reporttypeid,
 							 @RequestParam(name="reportdetail") String reportdetail,
 							 final RedirectAttributes r) {
@@ -356,9 +403,30 @@ public class ForumController {
 															getAuthentication().
 															getPrincipal();
 		uservo = principal1.getUservo();
+		if(id==null) {
+			
+			r.addFlashAttribute("ermsgsid","請輸入欲檢舉文章編號");
+			r.addFlashAttribute("articleid", id);
+			
+			
+		}
+		
+		if(reportdetail==null || reportdetail.trim().length()==0) {
+			
+			r.addFlashAttribute("ermsgscontext","請輸入檢舉詳細原因");
+			r.addFlashAttribute("reportdetail",reportdetail);
+			
+			
+		}
+		
+		if(id==null || reportdetail==null || reportdetail.trim().length()==0 ) {
+			
+			return "redirect:/forumReport";
+		}
+		
 		ReportEntity report= new ReportEntity();
 		
-		ArticleEntity articleEntity=articleService.findById(id);
+		ArticleEntity articleEntity=articleService.findById(articleid);
 		report.setArticleEntity(articleEntity);
 		report.setReportdatetime(new Date());
 		report.setUservo(uservo);

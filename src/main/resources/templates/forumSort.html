@@ -16,17 +16,74 @@
     <link href="/dist/css/guideline.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
  </head>
+ <style>
+ .box {
+            width: 300px;
+            margin: 0 auto;
+            border: 10px solid grey;
+            border-radius:10px;
+            overflow: hidden;
+        }
+ 
+        .animate {
+            padding-left: 20px;
+            font-size: 20px;
+            color: #000;
+            display: inline-block;
+            white-space: nowrap;
+            animation: 5s wordsLoop linear infinite normal;
+        }
+ 
+        @keyframes wordsLoop {
+            0% {
+                transform: translateX(200px);
+                -webkit-transform: translateX(200px);
+            }
+            100% {
+                transform: translateX(-100%);
+                -webkit-transform: translateX(-100%);
+            }
+        }
+ 
+        @-webkit-keyframes wordsLoop {
+            0% {
+                transform: translateX(200px);
+                -webkit-transform: translateX(200px);
+            }
+            100% {
+                transform: translateX(-100%);
+                -webkit-transform: translateX(-100%);
+            }
+        }
+ </style>
 <body>
 <div th:insert="/forumindex"></div>
   <div class="container">
     <div class="forum_list" style="background-color: #EAE0DA;">
       <h1>文章列表</h1>
     </div>
-    <div th:if="${#strings.isEmpty(ignore)}" style="margin-bottom:20px">
+<!--     <div class="alert alert-success alert-dismissible" th:unless="${#strings.isEmpty(success)}"> -->
+<!--       <a class="close" data-bs-dismiss="alert">&times;</a> -->
+<!--       <strong>歡迎來到OGABE論壇，很高興遇見您～</strong> -->
+<!--       <span th:text="${success}"></span> -->
+<!--     </div> -->
+<!--    		<div th:each="article : ${session.article}" class="box"> -->
+<!--       <span  th:text="'管理員推薦文章 < '+${article.articletitle}+' >'" class="animate" style="color:red"></span> -->
+<!--      	</div> -->
+<!--       <div class="alert alert-dark alert-dismissible" th:unless="${#strings.isEmpty(report)}"> -->
+<!--       <a class="close" data-bs-dismiss="alert">&times;</a> -->
+<!--       <strong th:text="${report}"></strong> -->
+<!--     </div> -->
+<!--     <div class="alert alert-success alert-dismissible" th:unless="${#strings.isEmpty(commentSuccess)}"> -->
+<!--       <a class="close" data-bs-dismiss="alert">&times;</a> -->
+<!--       <strong>歡迎來到OGABE論壇，很高興遇見您～</strong> -->
+<!--       <span th:text="${commentSuccess}"></span> -->
+<!--     </div> -->
+	   <div th:if="${#strings.isEmpty(ignore)}">
       <span class="close" data-bs-dismiss="alert">&#128512;</span>
       <strong  th:text="${user.username}+'歡迎來到OGABE論壇，很高興遇見您～'"></strong>
      	</div>
-     	<div style="margin-top: 10px; margin-bottom:20px" >
+			<div style="margin-top: 10px; margin-bottom:20px" >
 			<span >&rarr;</span><a th:each="u:${update}" th:if="${u.updatetime} != ${u.postdatetime}" th:text="'  <'+${u.articletitle}+'>,'" style="color:blue; text-decoration:none" th:href="@{/read/{id}(id=${u.articleid})}"></a>
 			<span th:text="近期更新趕快瀏覽吧+'~'"></span>
 			</div>
@@ -39,13 +96,24 @@
     <a th:href="@{/forum/{id}(id=5)}"  class="btn btn-outline-secondary">其他相關</a>
     </span>
       <span class="forum_function" >
+<div class="btn-group">
+  <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"   style="background-color: #C58940;">
+    篩選方式
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" th:href="@{/sort/{id}(id=1)}">文章發布日期</a>
+    <a class="dropdown-item" th:href="@{/sort/{id}(id=2)}">文章更新日期</a>
+    <a class="dropdown-item" th:href="@{/sort/{id}(id=3)}">文章人氣</a>
+    <a class="dropdown-item" th:href="@{/sort/{id}(id=4)}">文章觀看數</a>
+  </div>
+</div>
                         <a class="btn btn-secondary" href="#" th:href="@{/forumPost}" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16"  >
                             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                           </svg>發表文章</a>
                         <a class="btn btn-secondary" href="#" th:href="@{/forumSearch}" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" >
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                           </svg>尋找文章</a>
-                        <a class="btn btn-secondary" href="forum_report.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16" >
+                        <a class="btn btn-secondary" href="forum_report.html" th:href="@{/forumReport}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16" >
                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                             <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
                           </svg>檢舉文章</a>
@@ -57,10 +125,13 @@
   							<path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
   								<path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
 							</svg>我的文章</a>
+							
+		
       </span>
 
     </div>
-    <table class="table table-bordered table-striped table-hover " th:if="${not #lists.isEmpty(list)}">
+
+    <table class="table table-bordered table-striped table-hover ">
       <thead>
         <tr class="table-dark">
           <th>文章編號</th>
@@ -68,21 +139,38 @@
           <th>文章標題</th>
           <th>文章發布時間</th>
           <th>文章狀態</th>
-<!--          <th>View</th>-->
+          <th th:if="${id==3}" th:text="人氣"></th>
+          <th th:if="${id==4}" th:text="觀看數"></th>
+<!--            <th th:if="${id==3}" th:text="人氣"><th> -->
+
       </thead>
       <tbody>
-        <tr th:each="article:${list}">
-          <td ><a th:text="${article.articleid}" th:href="@{/read/{id}(id=${article.articleid})}"  style="text-decoration: none;color:black"></a></td>
+        <tr th:each="article:${page.content}">
+        <div th:if="${article.activestatusid==1}">
+          <td ><a th:text="${article.articleid}" th:href="@{/read/{id}(id=${article.articleid})}"  style="text-decoration: none;color: grey;"></a></td>
           <td th:text="${article.articleTypeEntity.articletypedetail}"></td>
           <td th:text="${article.articletitle}"></td>
           <td th:text="${#dates.format(article.postdatetime,'yyyy-MM-dd HH:mm:ss')}"></td>
           <td th:if="${article.postdatetime}==${article.updatetime}" th:text="截止此刻作者尚未更新內容" ></td>
           <td th:if="${article.postdatetime}!=${article.updatetime}" th:text="'更新於 '+${#dates.format(article.updatetime,'yyyy-MM-dd HH:mm:ss')}" style="color: red;"></td>
-<!--          <a  href="/read" th:href="@{/read}" class="link-danger">瀏覽</a>-->
+          <td  th:if="${id==3}" th:text="${article.likecount}"></td>
+          <td  th:if="${id==4}" th:text="${article.viewcount}"></td>
+<!--           <td th:if="1==2"></td> -->
+          </div>
         </tr>
       </tbody>
     </table>
-    <h1 th:if="${#lists.isEmpty(list)}" th:text="該文章種類尚未有文章發布"></h1>
+    <nav>
+      <ul class="pagination" style="float: right">
+        <li class="page-item"><a class="page-link" href="#" th:href="@{/sort/{id}(id=${id},page=${page.number-1})}" th:unless="${page.first}">上一頁</a></li>
+        <li class="page-item"><a class="page-link" href="#" th:href="@{/sort/{id}(id=${id},page=${page.number+1})}" th:unless="${page.last}">下一頁</a></li>
+      </ul>
+    </nav>
   </div>
 <script src="dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</body>
 </html>
+

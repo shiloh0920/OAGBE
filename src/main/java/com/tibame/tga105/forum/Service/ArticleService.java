@@ -94,5 +94,10 @@ public class ArticleService {
     	
     	return articleRepository.findArticleView();
     }
+    
+    public List<ArticleEntity> sortByPostdate(){
+    	
+    	return articleRepository.sortByPostdatetime();
+    }
     }
 

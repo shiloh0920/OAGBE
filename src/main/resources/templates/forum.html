@@ -81,7 +81,7 @@
     </div>
 	   <div th:if="${#strings.isEmpty(ignore)}">
       <span class="close" data-bs-dismiss="alert">&#128512;</span>
-      <span  th:text="${user.username}+'歡迎來到OGABE論壇，很高興遇見您～'"></span>
+      <strong  th:text="${user.username}+'歡迎來到OGABE論壇，很高興遇見您～'"></strong>
      	</div>
 			<div style="margin-top: 10px; margin-bottom:20px" >
 			<span >&rarr;</span><a th:each="u:${update}" th:if="${u.updatetime} != ${u.postdatetime}" th:text="'  <'+${u.articletitle}+'>,'" style="color:blue; text-decoration:none" th:href="@{/read/{id}(id=${u.articleid})}"></a>
@@ -96,6 +96,17 @@
     <a th:href="@{/forum/{id}(id=5)}"  class="btn btn-outline-secondary">其他相關</a>
     </span>
       <span class="forum_function" >
+<div class="btn-group">
+  <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"   style="background-color: #C58940;">
+    篩選方式
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" th:href="@{/sort/{id}(id=1)}">文章發布日期</a>
+    <a class="dropdown-item" th:href="@{/sort/{id}(id=2)}">文章更新日期</a>
+    <a class="dropdown-item" th:href="@{/sort/{id}(id=3)}">文章人氣</a>
+    <a class="dropdown-item" th:href="@{/sort/{id}(id=4)}">文章觀看數</a>
+  </div>
+</div>
                         <a class="btn btn-secondary" href="#" th:href="@{/forumPost}" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16"  >
                             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                           </svg>發表文章</a>
@@ -114,6 +125,8 @@
   							<path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
   								<path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
 							</svg>我的文章</a>
+							
+		
       </span>
 
     </div>
@@ -149,6 +162,9 @@
     </nav>
   </div>
 <script src="dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 <!-- <script th:inline="javascript"> -->
 <!-- // // var user=/*[[${user}]]*/[] -->
 <!-- // //    var msg=[[${msg}]]; -->

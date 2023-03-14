@@ -41,5 +41,9 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity,Integer> 
     
     @Query(value = "SELECT * FROM article order by view_count desc limit 5 ", nativeQuery = true)
     List<ArticleEntity> findArticleView();
+    
+    
+    @Query(value = "SELECT * FROM article order by post_datetime desc  ", nativeQuery = true)
+    List<ArticleEntity> sortByPostdatetime();
 }
 

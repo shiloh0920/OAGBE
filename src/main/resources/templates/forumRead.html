@@ -117,7 +117,7 @@
 		 </a>
     </span>
     
-    <span style="display: inline-block;" th:unless="${user.userstatusvo.statusid==1}">
+    <span style="display: inline-block;" th:unless="${user.userstatusvo.statusid==1 || user.userid==articleEntity.userVo.userid}">
     <a th:href="@{/forumReport(value=${articleEntity.articleid})}" > 
     <button type="button" class="btn btn-outlineprimary" data-bs-toggle="modal" data-bs-target="#systemnote">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16" >
