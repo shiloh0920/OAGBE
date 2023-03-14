@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -58,9 +57,9 @@
 			<td class="col-1 "><%=order.getDishity()%></td>
 			<td class="col-1 ">
 				<form name="deleteForm" action="Shopping" method="POST">
-					<input type="hidden" name="action" value="DELETE"> <input
-						type="hidden" name="del" value="<%=index%>"> <input
-						type="submit" value="移除" class="btn btn-danger">
+					<input type="hidden" name="action" value="DELETE"> 
+					<input type="hidden" name="del" value="<%=index%>"> 
+					<input type="submit" value="移除" class="btn btn-danger">
 				</form>
 			</td>
 

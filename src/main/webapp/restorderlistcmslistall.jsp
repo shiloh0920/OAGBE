@@ -273,7 +273,7 @@
         </tbody>
       </table>
       <div>
-        <a class="btn btn-outline-secondary"  href="restorderlistcmsadd.jsp">新增</a>
+<!--         <a class="btn btn-outline-secondary"  href="restorderlistcmsadd.jsp">新增</a> -->
 		<a class="btn btn-outline-secondary"  href="restorderlistcmsselect.jsp">查詢</a>
 		<a class="btn btn-secondary"  href="restcmslistall.jsp">餐廳管理</a>
 		<a class="btn btn-secondary"  href="dishcmslistall.jsp">餐點管理</a>

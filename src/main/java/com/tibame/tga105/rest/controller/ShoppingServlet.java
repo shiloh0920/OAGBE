@@ -30,6 +30,7 @@ public class ShoppingServlet extends HttpServlet{
 			// 刪除購物車中的餐點
 			if (action.equals("DELETE")) {
 				String del = req.getParameter("del");
+				System.err.println(del);
 				int d = Integer.parseInt(del);
 				buylist.remove(d);
 			}
@@ -68,8 +69,6 @@ public class ShoppingServlet extends HttpServlet{
 //				Integer dishity = order.getDishity();
 //				total += (dishprice * dishity);
 //			}
-
-			
 			double total = buylist.stream()
 								  .mapToDouble(o -> o.getDishprice() * o.getDishity())
 								  .sum();

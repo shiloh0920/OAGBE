@@ -263,7 +263,7 @@ public class RestOrderServlet extends HttpServlet{
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("restordercmsadd.jsp");
+							.getRequestDispatcher("dishcheckout.jsp");
 					failureView.forward(req, res);
 					return;
 				}

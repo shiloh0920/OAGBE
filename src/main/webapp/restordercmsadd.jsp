@@ -244,17 +244,17 @@
 
 <FORM METHOD="post" ACTION="restOrder.do"  name="form1">
 
-	<jsp:useBean id="userSvc" scope="page" class="com.tibame.tga105.user.service.UserService" />
-	<div class="mb-3">
-		<div class="rest_dish_select_qty">會員:
-		<label for="InputRestorderid" class="form-label">		
-		<select class="form-select" size="1" name="userid" id="InputRestorderid">
-			<c:forEach var="userVO" items="${userSvc.all}">
-				<option value="${userVO.userid}" ${(param.userid==userVO.userid)? 'selected':'' } >${userVO.username}
-			</c:forEach>
-		</select></label>
-		</div>
-	</div>
+<%-- 	<jsp:useBean id="userSvc" scope="page" class="com.tibame.tga105.user.service.UserService" /> --%>
+<!-- 	<div class="mb-3"> -->
+<!-- 		<div class="rest_dish_select_qty">會員: -->
+<!-- 		<label for="InputRestorderid" class="form-label">		 -->
+<!-- 		<select class="form-select" size="1" name="userid" id="InputRestorderid"> -->
+<%-- 			<c:forEach var="userVO" items="${userSvc.all}"> --%>
+<%-- 				<option value="${userVO.userid}" ${(param.userid==userVO.userid)? 'selected':'' } >${userVO.username} --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</select></label> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
 	<jsp:useBean id="restSvc" scope="page" class="com.tibame.tga105.rest.restmodel.RestService" />
 	<div class="mb-3">
 		<div class="rest_dish_select_qty">餐廳:

@@ -263,17 +263,23 @@ public class DishServlet extends HttpServlet {
 			if (dishname == null || dishname.trim().length() == 0) {
 				errorMsgs.add("餐點名稱請勿空白");
 			}
-			
-			Integer dishprice = Integer.valueOf(req.getParameter("dishprice").trim());
-			if (dishprice == null) {
+
+			Integer dishprice = null;
+			try {
+				dishprice = Integer.valueOf(req.getParameter("dishprice").trim());
+			} catch (NumberFormatException e) {
+				dishprice = 0;
 				errorMsgs.add("餐點價格請勿空白");
 			}
-
-			Integer dishity = Integer.valueOf(req.getParameter("dishity").trim());
-			if (dishity == null) {
+			
+			Integer dishity = null;
+			try {
+				dishity = Integer.valueOf(req.getParameter("dishity").trim());
+			} catch (NumberFormatException e) {
+				dishity = 0;
 				errorMsgs.add("餐點數量請勿空白");
 			}
-
+	
 			String dishdescription = req.getParameter("dishdescription").trim();
 			if (dishdescription == null || dishdescription.trim().length() == 0) {
 				errorMsgs.add("請簡單描述餐點");
