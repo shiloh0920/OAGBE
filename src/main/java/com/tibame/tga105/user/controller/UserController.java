@@ -278,15 +278,53 @@ public class UserController {
 		m.addAttribute("msg", "success");
 		return "user_data_changepassword";
 	}
+	
+//	@GetMapping("/image/show/{userid}")
+//	@ResponseBody
+//	public String testpic(@PathVariable Integer userid, HttpServletResponse res, UserVO uservo) throws ServletException, IOException {
+//		uservo = userService.getUserById(userid);
+//		res.setContentType("image/jped, image/jpg, image/png, image/gif");
+//		
+//		
+//		if(uservo.getUserpic()==null) {
+//			Resource resource = new ClassPathResource("\\static\\images\\user_default_pic.png");
+//			String defaultPicPath = resource.getFile().getPath();
+//			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(new File(defaultPicPath)));
+//			byte[] defaultPic = bis.readAllBytes();
+//			res.getOutputStream().write(defaultPic);
+//			bis.close();
+//		}else {
+//			res.getOutputStream().write(uservo.getUserpic());
+//		}
+//		
+//		res.getOutputStream().close();
+//
+//		return null;
+//		
+//	}
 
 
 	@GetMapping("/image/display/{userid}")
-	@ResponseBody
-	public void showUserImg(@PathVariable Integer userid, HttpServletResponse res, UserVO uservo)
+//	@ResponseBody
+	public String showUserImg(@PathVariable Integer userid, HttpServletResponse res, UserVO uservo)
 			throws ServletException, IOException {
+		
+		Integer currentUserid = null;
+		Integer currentUserstatusid = null;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserPrincipal) {
+			currentUserid = ((UserPrincipal) principal).getUservo().getUserid();
+			currentUserstatusid = ((UserPrincipal) principal).getUservo().getUserstatusvo().getStatusid();
+		}
+		if(currentUserid!=userid && currentUserstatusid!=1) {
+			System.out.println("不同使用者");
+			return "redirect:/access-denied";
+		}
+		
 
 		uservo = userService.getUserById(userid);
 		res.setContentType("image/jped, image/jpg, image/png, image/gif");
+		
 		
 		if(uservo.getUserpic()==null) {
 			Resource resource = new ClassPathResource("\\static\\images\\user_default_pic.png");
@@ -300,7 +338,9 @@ public class UserController {
 		}
 		
 		res.getOutputStream().close();
-
+		
+		return null;
+		
 	}
 
 	@GetMapping("/confirm-account")
