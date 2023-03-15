@@ -1,28 +1,87 @@
-<!DOCTYPE html>
-<html lang="ZH-tw" xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="" />
-  <meta
-          name="author"
-          content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
-  />
-  <meta name="generator" content="Hugo 0.108.0" />
-  <title>OGABE|論壇</title>
-  <link href="/dist/css/carousel.css" rel="stylesheet" />
-    <link href="/dist/css/my.css" rel="stylesheet" />
-    <link href="/cheatsheet.css" rel="stylesheet" />
-    <link href="/dist/css/guideline.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
- </head>
+<title>OGABE|後台論壇資料管理</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900"
+	rel="stylesheet">
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="/sidebar-01/css/style.css">
+</head>
 <body>
-<div th:insert="/header"></div>
-  <div class="container">
-    <div class="forum_list" style="background-color: #EAE0DA;">
-      <h1>論壇後台系統</h1>
-    </div>
-   <div style="display:flex;flex-wrap:wrap;">
+
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+				<div class="p-4 pt-5">
+          <img src="/sidebar-01/images/ogabecolor21.png" alt="" width="210" height="120">
+		  		
+	        <ul class="list-unstyled components mb-5">
+            <li>
+                <a href="admin/user/userlist/1"> <i class="fa-solid fa-house-user fa-lg"></i>會員管理</a>
+            </li>
+	          <li>
+	              <a href="#">餐廳後台管理</a>
+	          </li>
+	          <li>
+	              <a href="#">商城後台管理</a>
+	          </li>
+	          <li>
+	              <a href="/forumBackStage">論壇後台管理</a>
+	          </li>
+	          <li>
+	              <a href="#">客服後台管理</a>
+	          </li>
+	          <li class="nav-item">
+	          <div style="margin-top:40px">
+                <a
+                  class="btn btn-danger btn-sg"
+                  href="/user/logout"
+                  >登出</a
+                >
+                </div>
+              </li>
+	        </ul>
+
+	        <div class="footer">
+            
+	        </div>
+
+	      </div>
+    	</nav>
+
+        <!-- Page Content  -->
+      <div id="content" class="p-3 p-md-4">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+              <i class="fa fa-bars"></i>
+              <span class="sr-only">Toggle Menu</span>
+            </button>
+            <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav navbar-nav ml-auto">
+                <h2>OGABE論壇後台管理</h2>
+              </ul>
+            </div>
+          </div>
+        </nav>
+<!--         從92行自定義內容 地91行div結尾標籤在第200行 -->
+        <div class="container pb-1">
+          <div style="display:flex;flex-wrap:wrap;">
   <div class="card" style="width: 21rem;">
   <img src="/images/coffeesohp2.jpg" class="card-img-top" alt="...">
   <div class="card-body">
@@ -121,9 +180,8 @@
 				</tr>
 			</tbody>
 		</table>
-       
       </div>
-      <div class="modal-footer">
+      <di	v class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
       </div>
     </div>
@@ -132,19 +190,24 @@
 </div>
 </div>
 </div>
- </div>
- <script th:inline="javascript">
- var col=document.querySelector('#id').innerText;
- document.querySelector('#recommend').addEventListener("click",function(event){
-		event.preventDefault();
-		if(confirm("確定推薦嗎")){
-			 window.location.href =`/recommend/`+ col
-		}
-	});
- </script>
-<script src="dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        </div>
+      </div>
+	</div>
+
+	<script th:inline="javascript">
+	</script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+		crossorigin="anonymous">
+	</script>
+	<script src="https://kit.fontawesome.com/726c532433.js"
+		crossorigin="anonymous"></script>
+	<script src="/sidebar-01/js/jquery.min.js"></script>
+	<script src="/sidebar-01/js/popper.js"></script>
+	<script src="/sidebar-01/js/bootstrap.min.js"></script>
+	<script src="/sidebar-01/js/main.js"></script>
+	
+
 </body>
 </html>

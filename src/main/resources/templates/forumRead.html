@@ -71,7 +71,7 @@
   }
 </style>
 <body>
-<div th:insert="/forumindex"></div>
+<div th:insert="/header"></div>
 <div class="container"th:object="${articleEntity}" >
   <div class="forum_read" style="background-color: #EAE0DA;">
     <h1>瀏覽文章</h1>
@@ -107,7 +107,7 @@
 <!--     </button> -->
 <!--     </form> -->
 <!--     </span> -->
-    <span style="display: inline-block;" th:unless="${user.userstatusvo.statusid==1}">
+    <span style="display: inline-block;" th:if="${likeinfo==null && user.userstatusvo.statusid!=1}">
      <a th:href="@{/forumaddLike(value=${articleEntity.articleid})}" > 
      <button type="button" class="btn btn-outlineprimary" data-bs-toggle="modal" data-bs-target="#systemnote" onclick="addLike(this)">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
@@ -115,6 +115,13 @@
 		</svg>我要點讚
 		 </button>
 		 </a>
+    </span>
+     <span style="display: inline-block;" th:if="${likeinfo!=null &&likeinfo.statusid==1}"> 
+     <button type="button" class="btn btn-outlineprimary" data-bs-toggle="modal" data-bs-target="#systemnote" onclick="addLike(this)" disabled>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+  		<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+		</svg>您已點讚
+		 </button>
     </span>
     
     <span style="display: inline-block;" th:unless="${user.userstatusvo.statusid==1 || user.userid==articleEntity.userVo.userid}">

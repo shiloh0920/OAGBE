@@ -137,6 +137,10 @@
 			<artifactId>spring-security-web</artifactId>
 			<version>5.7.7</version>
 		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

@@ -33,12 +33,14 @@ import com.tibame.tga105.forum.Service.ArticleService;
 import com.tibame.tga105.forum.Service.ArticleTypeService;
 import com.tibame.tga105.forum.Service.CollectionService;
 import com.tibame.tga105.forum.Service.EmailServices;
+import com.tibame.tga105.forum.Service.LikeStatusService;
 import com.tibame.tga105.forum.Service.ReplyService;
 import com.tibame.tga105.forum.Service.ReportService;
 import com.tibame.tga105.forum.Service.ReportTypeService;
 import com.tibame.tga105.forum.entity.ArticleEntity;
 import com.tibame.tga105.forum.entity.ArticleTypeEntity;
 import com.tibame.tga105.forum.entity.CollectionEntity;
+import com.tibame.tga105.forum.entity.LikeStatusEntity;
 import com.tibame.tga105.forum.entity.ReplyEntity;
 import com.tibame.tga105.forum.entity.ReportEntity;
 import com.tibame.tga105.forum.entity.ReportTypeEntity;
@@ -72,6 +74,8 @@ public class ForumController {
 	@Autowired
 	EmailServices emailServices;
 	
+	@Autowired
+	LikeStatusService likestatusService;
 	
 	
 	@GetMapping("/read")
@@ -112,7 +116,12 @@ public class ForumController {
 		List<CollectionEntity> coll=collectionService.find(uservo.getUserid());
 		System.out.println("-------------"+coll);
 		
-
+		LikeStatusEntity like=likestatusService.find(id, uservo.getUserid());
+		
+		if(like!=null) {
+			model.addAttribute("likeinfo", like);
+		}
+		
 		model.addAttribute("articleEntity", articleEntity);
 		model.addAttribute("lister", list);
         model.addAttribute("user",uservo);
@@ -275,25 +284,27 @@ public class ForumController {
 						Model model) {
 		Sort sort = Sort.by(Sort.Direction.DESC, "articleid");
 		Page<ArticleEntity> pages = articleService.findAllByPage(PageRequest.of(page, size, sort));
-		// List<ArticleEntity> articleEntityList =articleService.findAll();
 		model.addAttribute("page", pages);
 
 		
 		
-//		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		String username = null;
+
 		UserVO uservo = null;
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		if (principal instanceof UserPrincipal) {
 			uservo = userService.getUserByEmail(((UserPrincipal) principal).getUsername());
+			
 		} 
 		
+		if (!(principal instanceof UserPrincipal)) {
+			
+			return "redirect:/login";
+		} 
 		model.addAttribute("msg","ok");
 		model.addAttribute("user", uservo);
 		
 		List<ArticleEntity> update=articleService.findAll();
-//		model.addAttribute("user", uservo); 
 		model.addAttribute("update",update);
 			return "forum";
 		
@@ -345,6 +356,19 @@ public class ForumController {
 		return "forumSort";
 	}
 	
+	@PostMapping("/index")
+	public String indexf(Model model) {
+
+		UserVO uservo = null;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		if (principal instanceof UserPrincipal) {
+			uservo = userService.getUserByEmail(((UserPrincipal) principal).getUsername());
+		} 
+		model.addAttribute("user", uservo);
+		return "forumindex";
+	}
+	
 	@GetMapping("/forum/{id}")
 	public String articleid(@PathVariable(name="id") Integer id,
 							@RequestParam(defaultValue = "0") int page,
@@ -369,11 +393,32 @@ public class ForumController {
 		return"forumType";
 	}
 	
+
 	@GetMapping("/forumaddLike")
 	public String like(@RequestParam(name="value",required = true) Integer articleid) {
 		ArticleEntity a=articleService.findById(articleid);
+		
+		
+		UserVO uservo = null;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		if (principal instanceof UserPrincipal) {
+			uservo = userService.getUserByEmail(((UserPrincipal) principal).getUsername());
+		} 
+		
 		a.setLikecount(a.getLikecount()+1);
 		articleService.add(a);
+		
+		LikeStatusEntity l=likestatusService.find(articleid, uservo.getUserid());
+		
+		if(l==null) {
+			LikeStatusEntity like=new LikeStatusEntity();
+			like.setArticleid(articleid);
+			like.setUserid(uservo.getUserid());
+			likestatusService.add(like);
+		}
+		
+		
 		return "redirect:/read/"+articleid;
 	}
 	
@@ -392,7 +437,7 @@ public class ForumController {
 	}
 	@GetMapping("/addReport")
 	public String addReport (@RequestParam(name="value",required = false) Integer articleid,
-							 @RequestParam(name="articleid") String id,
+							 @RequestParam(name="articleid") Integer id,
 							 @RequestParam(name="reporttypeid") Integer reporttypeid,
 							 @RequestParam(name="reportdetail") String reportdetail,
 							 final RedirectAttributes r) {
@@ -403,30 +448,10 @@ public class ForumController {
 															getAuthentication().
 															getPrincipal();
 		uservo = principal1.getUservo();
-		if(id==null) {
-			
-			r.addFlashAttribute("ermsgsid","請輸入欲檢舉文章編號");
-			r.addFlashAttribute("articleid", id);
-			
-			
-		}
-		
-		if(reportdetail==null || reportdetail.trim().length()==0) {
-			
-			r.addFlashAttribute("ermsgscontext","請輸入檢舉詳細原因");
-			r.addFlashAttribute("reportdetail",reportdetail);
-			
-			
-		}
-		
-		if(id==null || reportdetail==null || reportdetail.trim().length()==0 ) {
-			
-			return "redirect:/forumReport";
-		}
 		
 		ReportEntity report= new ReportEntity();
 		
-		ArticleEntity articleEntity=articleService.findById(articleid);
+		ArticleEntity articleEntity=articleService.findById(id);
 		report.setArticleEntity(articleEntity);
 		report.setReportdatetime(new Date());
 		report.setUservo(uservo);
@@ -482,7 +507,7 @@ public class ForumController {
 		model.addAttribute("views",views);
 		
 		
-		return"forumBackStage";
+		return"BackStageTemplate";
 	}
 	@GetMapping("/recommend/{id}")
 	public String recommend(@PathVariable(name="id") Integer id,
