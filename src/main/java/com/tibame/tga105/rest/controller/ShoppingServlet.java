@@ -31,6 +31,7 @@ public class ShoppingServlet extends HttpServlet{
 			if (action.equals("DELETE")) {
 				String del = req.getParameter("del");
 				System.err.println(del);
+
 				int d = Integer.parseInt(del);
 				buylist.remove(d);
 			}
