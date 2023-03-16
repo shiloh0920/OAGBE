@@ -106,7 +106,7 @@ public class SecurityConfig {
 				.hasAnyAuthority("USER","ADMIN","UNCERTIFIED")
 				
 				.antMatchers("/restOrder.do/**")
-				.hasAnyAuthority("USER")
+				.hasAnyAuthority("USER","ADMIN")
 				
 				.antMatchers("/","/login","/Shopping","/**")
 			    .permitAll()

@@ -111,12 +111,7 @@
 <%-- 		<input type="hidden" name="dishqty" value="${param.dishity}"> --%>
 <%-- 		<input type="hidden" name="restid" value="${param.restid}"> --%>
 <!-- 		<input type="submit" class="btn btn-primary" value="送出"></FORM>	 -->
-		
 	
-		
-
-		
-		
 	
 </body>
 </html>
