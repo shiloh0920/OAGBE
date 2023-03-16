@@ -21,7 +21,7 @@
 
 </head>
 <body>
-	---${param.restid}---
+<%-- 	---${param.restid}--- --%>
 	<h2 class="h_center">您所選擇的餐點:</h2>
 	<hr>
 	<form name="ordercheckout" method="POST">

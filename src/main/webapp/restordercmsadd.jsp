@@ -24,18 +24,17 @@ RestOrderVO restOrderVO = (RestOrderVO) request.getAttribute("restOrderVO");
 	rel="stylesheet"
 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 	crossorigin="anonymous">
-	<link rel="stylesheet" href="/sidebar-01/css/style.css">
-	<link href="dist/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="dist/css/carousel.css" rel="stylesheet" />
-	<link href="dist/css/my.css" rel="stylesheet" />
-	
-	<style>
-	body {
-  	padding-top: 0rem;
-  	padding-bottom: 0rem;
-  	color: #5a5a5a;
-		}
-	</style>
+<link rel="stylesheet" href="/sidebar-01/css/style.css">
+<link href="dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="dist/css/carousel.css" rel="stylesheet" />
+<link href="dist/css/my.css" rel="stylesheet" />
+<style>
+body {
+	padding-top: 0rem;
+	padding-bottom: 0rem;
+	color: #5a5a5a;
+}
+</style>
 </head>
 
 <body>
@@ -46,26 +45,22 @@ RestOrderVO restOrderVO = (RestOrderVO) request.getAttribute("restOrderVO");
 					height="120">
 
 				<ul class="list-unstyled components mb-5">
-					<li><a href="#"> <i class="fa-solid fa-house-user fa-lg"></i>會員管理
+					<li><a href="admin/user/userlist/1"> <i
+							class="fa-solid fa-house-user fa-lg"></i>會員管理
 					</a></li>
-					<li><a href="#">檢舉文章管理</a></li>
-					<li><a href="#pageSubmenu" data-toggle="collapse"
-						aria-expanded="false" class="dropdown-toggle">餐廳管理</a>
-						<ul class="collapse list-unstyled" id="pageSubmenu">
-							<li><a href="#">餐廳管理</a></li>
-							<li><a href="#">餐點管理</a></li>
-							<li><a href="#">訂單管理</a></li>
-							<li><a href="#">訂單明細管理</a></li>
-						</ul></li>
-					<li><a href="#">TBD</a></li>
-					<li><a href="#">TBD</a></li>
+					<li><a href="#">餐廳後台管理</a></li>
+					<li><a href="#">商城後台管理</a></li>
+					<li><a href="/forumBackStage">論壇後台管理</a></li>
+					<li><a href="#">客服後台管理</a></li>
+					<li class="nav-item">
+						<div style="margin-top: 40px">
+							<a class="btn btn-danger btn-sg" href="/user/logout">登出</a>
+						</div>
+					</li>
 				</ul>
-
 				<div class="footer"></div>
-
 			</div>
 		</nav>
-</div>
 		<!-- Page Content  -->
 		<div id="content" class="p-3 p-md-4">
 
@@ -93,10 +88,10 @@ RestOrderVO restOrderVO = (RestOrderVO) request.getAttribute("restOrderVO");
 			</nav>
 			<!-- 主要內容區域 -->
 			<!-- 以下內容各自定義 -->
-<!-- 			<div class="container-fluid pt-5 px-5"> -->
-<!-- 				<h1 class="h_center">點餐系統後台</h1> -->
-<!-- 			</div> -->
-<!-- 			<hr /> -->
+			<!-- 			<div class="container-fluid pt-5 px-5"> -->
+			<!-- 				<h1 class="h_center">點餐系統後台</h1> -->
+			<!-- 			</div> -->
+			<!-- 			<hr /> -->
 			<h2 class="h_center">點餐系統訂單管理</h2>
 			<br>
 			<div class="text-center">
@@ -181,18 +176,22 @@ RestOrderVO restOrderVO = (RestOrderVO) request.getAttribute("restOrderVO");
 			<div class="h_center">
 				<a class="btn btn-outline-secondary" href='restordercmslistall.jsp'>訂單管理</a>
 
-				<script
-					src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-					integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-					crossorigin="anonymous">
-					
-				</script>
-				<script src="https://kit.fontawesome.com/726c532433.js"
-					crossorigin="anonymous"></script>
-				<script src="/sidebar-01/js/jquery.min.js"></script>
-				<script src="/sidebar-01/js/popper.js"></script>
-				<script src="/sidebar-01/js/bootstrap.min.js"></script>
-				<script src="/sidebar-01/js/main.js"></script>
+			</div>
+
+
+
+			<script
+				src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+				integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+				crossorigin="anonymous">
+				
+			</script>
+			<script src="https://kit.fontawesome.com/726c532433.js"
+				crossorigin="anonymous"></script>
+			<script src="/sidebar-01/js/jquery.min.js"></script>
+			<script src="/sidebar-01/js/popper.js"></script>
+			<script src="/sidebar-01/js/bootstrap.min.js"></script>
+			<script src="/sidebar-01/js/main.js"></script>
 </body>
 
 
