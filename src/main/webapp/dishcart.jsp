@@ -59,6 +59,7 @@
 				<form name="deleteForm" action="Shopping" method="POST">
 					<input type="hidden" name="action" value="DELETE"> 
 					<input type="hidden" name="del" value="<%=index%>"> 
+					<input type="hidden" name="restid" value="${param.restid}"> 
 					<input type="submit" value="移除" class="btn btn-danger">
 				</form>
 			</td>

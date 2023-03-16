@@ -30,10 +30,11 @@ public class ShoppingServlet extends HttpServlet{
 			// 刪除購物車中的餐點
 			if (action.equals("DELETE")) {
 				String del = req.getParameter("del");
-				System.err.println(del);
-
+				System.out.println("del="+del);
+//System.out.println("--------------------------------buylist.size()="+buylist.size());
 				int d = Integer.parseInt(del);
 				buylist.remove(d);
+//System.out.println("--------------------------------buylist.size()="+buylist.size());
 			}
 			// 新增餐點至購物車中
 			else if (action.equals("ADD")) {

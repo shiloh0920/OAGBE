@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,17 +56,28 @@
 						<li class="nav-item"><a class="nav-link" aria-current="page"
 							href="/welcome">論壇</a></li>
 						<li class="nav-item"><a class="nav-link" aria-current="page"
-							href="http://localhost:8080/restfrontselect.jsp">線上訂餐</a>
-						</li>
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="http://localhost:8080/login">登入</a>
-						<!--active是調整成高亮--></li>
-						<!-- Button trigger modal -->
+							href="http://localhost:8080/restfrontselect.jsp">線上訂餐</a></li>
+
+							<c:choose>
+								<c:when test="${not empty uservo}">
+<!-- 									<form action="/logout" method="post"> -->
+										<li class="nav-item">
+										<a class="nav-link active btn btn-danger" data-bs-toggle="modal"
+											data-bs-target="#staticBackdrop" href="/user/logout">登出</a>
+										</li>
+<!-- 									</form> -->
+								</c:when>
+								<c:otherwise>
+								 		<li class="nav-item">
+										<a class="nav-link active" aria-current="page" href="/login">登入</a>
+										</li>
+									</c:otherwise>
+							</c:choose>
+
 						<li class="nav-item"><a
 							class="nav-link active btn btn-primary" data-bs-toggle="modal"
 							data-bs-target="#staticBackdrop"
-							href="http://localhost:8080/register">註冊</a>
-						<!--active是調整成高亮--></li>
+							href="http://localhost:8080/register">註冊</a> <!--active是調整成高亮--></li>
 					</ul>
 				</div>
 			</div>
