@@ -224,12 +224,9 @@
 				<div class="form-group col-sm-8" th:switch="${uservo.userstatusvo.statusid}">
 				<select class="form-select" name="userstatus" th:switch="${uservo.userstatusvo.statusid}">
 					<option selected th:case="1" th:value=1 th:text="管理員"></option>
-<!-- 						<td th:case="1" th:text="1">11</td> -->
-<!-- 						<td th:case="2" value=2 th:text="2">22</td> -->
-<!-- 						<td th:case="3" value=3 th:text="3">33</td> -->
 					<option selected th:case="2" th:value=2 th:text="未認證會員"></option>
 					<option selected th:case="3" th:value=3 th:text="一般會員"></option>
-					<option th:if="${uservo.userstatusvo.statusid!=1}" th:value=1 th:text="管理員"></option>
+<!-- 					<option th:if="${uservo.userstatusvo.statusid!=1}" th:value=1 th:text="管理員"></option> -->
 					<option th:if="${uservo.userstatusvo.statusid!=2}" th:value=2 th:text="未認證會員"></option>
 					<option th:if="${uservo.userstatusvo.statusid!=3}" th:value=3 th:text="一般會員"></option>
 				</select> <br>

@@ -282,22 +282,19 @@
               </li>
               <span sec:authorize="isAuthenticated()">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html" th:text ="${#authentication.getPrincipal().getUservo().getUsername()}">登入</a
+                <a class="nav-link active" aria-current="page" href="" th:text ="${#authentication.getPrincipal().getUservo().getUsername()}">登入</a
                 >
               </li>
                </span>
                <span sec:authorize="isAuthenticated()">
-              <li class="nav-item">
+       
                <li class="nav-item">
-                <a
-                  class="nav-link active btn btn-danger"
-                  data-bs-toggle="modal"
-                  data-bs-target="#staticBackdrop"
+                <a class="nav-link rounded active bg-danger"
                   href="/user/logout"
                   >登出</a
                 ><!--active是調整成高亮-->
               </li>
-              </li>
+         
                </span>
                <li class="nav-item" sec:authorize="isAnonymous()">
                 <a class="nav-link active" aria-current="page" href="/login" >登入</a
@@ -306,10 +303,9 @@
              
                 <li class="nav-item">
                 <a
-                  class="nav-link active btn btn-primary"
-                  data-bs-toggle="modal"
-                  data-bs-target="#staticBackdrop"
-                  href="http://localhost:8080/register"
+                  class="nav-link rounded active bg-primary"
+
+                  href="/register"
                   >註冊</a
                 ><!--active是調整成高亮-->
               </li>
@@ -319,58 +315,7 @@
       </nav>
     </header>
     
-<main>
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-       aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content rounded-4 shadow">
-        <div class="modal-header p-5 pb-4 border-bottom-0">
-          <!-- <h1 class="modal-title fs-5" >Modal title</h1> -->
-          <h1 class="fw-bold mb-0 fs-2">Sign up for free</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body p-5 pt-0">
-          <form class="">
-            <div class="form-floating mb-3">
-              <input type="email" class="form-control rounded-3" id="floatingInput"
-                     placeholder="name@example.com" />
-              <label for="floatingInput">Email address</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input type="password" class="form-control rounded-3" id="floatingPassword"
-                     placeholder="Password" />
-              <label for="floatingPassword">Password</label>
-            </div>
-            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">
-              Sign up
-            </button>
-            <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
-            <hr class="my-4" />
-            <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
-            <button class="w-100 py-2 mb-2 btn btn-outline-dark rounded-3" type="submit">
-              <svg class="bi me-1" width="16" height="16">
-                <use xlink:href="#twitter" />
-              </svg>
-              Sign up with Twitter
-            </button>
-            <button class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3" type="submit">
-              <svg class="bi me-1" width="16" height="16">
-                <use xlink:href="#facebook" />
-              </svg>
-              Sign up with Facebook
-            </button>
-            <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3" type="submit">
-              <svg class="bi me-1" width="16" height="16">
-                <use xlink:href="#github" />
-              </svg>
-              Sign up with GitHub
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
+
 <script src="dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>

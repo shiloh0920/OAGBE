@@ -242,8 +242,8 @@ public class UserController {
 		}
 
 		userService.saveUser(temp);
-		m.addAttribute("uservo", temp);
-		return "user_data";
+		
+		return "redirect:/userpage";
 	}
 
 	@GetMapping("/userpage/userchangepassword")

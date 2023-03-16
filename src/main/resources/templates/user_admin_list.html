@@ -26,31 +26,29 @@
 		  		
 	        <ul class="list-unstyled components mb-5">
             <li>
-                <a href="#"> <i class="fa-solid fa-house-user fa-lg"></i>會員管理</a>
+                <a href="/admin/user/userlist/1"> <i class="fa-solid fa-house-user fa-lg"></i>會員管理</a>
             </li>
 	          <li>
-	              <a href="#">檢舉文章管理</a>
+	              <a href="#">餐廳後台管理</a>
 	          </li>
 	          <li>
-              <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">TBD</a>
-              <ul class="collapse list-unstyled" id="pageSubmenu">
-                <li>
-                    <a href="#">TBD 1</a>
-                </li>
-                <li>
-                    <a href="#">TBD 2</a>
-                </li>
-                <li>
-                    <a href="#">TBD 3</a>
-                </li>
-              </ul>
+	              <a href="#">商城後台管理</a>
 	          </li>
 	          <li>
-              <a href="#">TBD</a>
+	              <a href="/forumBackStage">論壇後台管理</a>
 	          </li>
 	          <li>
-              <a href="#">TBD</a>
+	              <a href="#">客服後台管理</a>
 	          </li>
+	          <li class="nav-item">
+	          <div style="margin-top:40px">
+                <a
+                  class="btn btn-danger btn-sg"
+                  href="/user/logout"
+                  >登出</a
+                >
+                </div>
+              </li>
 	        </ul>
 
 	        <div class="footer">
@@ -116,7 +114,13 @@
                   <i class="fa fa-search"></i> 搜尋
                 </button>
                 <button type="button" id="resetTable" class="btn btn-warning text-white"
-                  onclick="location.href='/admin/user/userlist/1'">重置</button>
+                  onclick="location.href='/admin/user/finduncertifyuser'">
+                  未認證會員
+                </button>
+                <button type="button" id="resetTable" class="btn btn-warning text-white"
+                  onclick="location.href='/admin/user/userlist/1'">
+                  重置
+                </button>
               </form>
             </div>
           </div>
@@ -129,19 +133,23 @@
                 <th scope="col">會員_Email</th>
                 <th scope="col">會員_姓名</th>
                 <th scope="col">會員_地址</th>
-                <th scope="col">會員_電話</th>
+                <th scope="col">會員_狀態</th>
                 <th scope="col">會員_照片</th>
                 <th scope="col">Action</th>
       
               </tr>
             </thead>
-            <tbody>
+            <tbody >
               <tr th:each="uservolist : ${uservolist}">
                 <th th:text="${uservolist.userid}"></th>
                 <td th:text="${uservolist.useremail}"></td>
                 <td th:text="${uservolist.username}"></td>
-                <td th:text="${uservolist.useraddress}"></td>
-                <td th:text="${uservolist.usertel}"></td>
+				<td th:text="${uservolist.useraddress}"></td>
+	                <td th:if="${uservolist.userstatusvo.statusid}==1" th:text="管理員"></td>
+	                <td th:if="${uservolist.userstatusvo.statusid}==2" th:text="未認證"></td>
+	                <td th:if="${uservolist.userstatusvo.statusid}==3" th:text="一般會員"></td>
+
+                
                 <td><img th:src="@{${'/image/display/'+ uservolist.userid}}"
                   width="110" height="140" id="userpic"
                   onerror="javascript:this.src='/images/user_default_pic.png'"></td>
