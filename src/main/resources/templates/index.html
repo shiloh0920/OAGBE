@@ -1,15 +1,419 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Home</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.com">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OGABE|首頁</title>
+    <link href="/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/dist/css/carousel.css" rel="stylesheet" />
+    <link href="/dist/css/my.css" rel="stylesheet" />
+  </head>
+
 <body>
-<a href="/login">登入</a><br>
-<a href="/userpage">會員頁面(需先登入過)</a><br>
-<a href="/register">會員註冊</a><br>
-<a href="/admin/user/userlist/1">會員後台列表(需先登入且具有管理員身份)</a><br>
+	<!-- header -->
+		<div th:insert="/header"></div>
+<main>
+      <!-- go to top -->
+      <div class="to-top">
+        <a href="#">TOP</a>
+      </div>
+      <!-- Model註冊彈跳視窗 -->
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content rounded-4 shadow">
+            <div class="modal-header p-5 pb-4 border-bottom-0">
+              <!-- <h1 class="modal-title fs-5" >Modal title</h1> -->
+              <h1 class="fw-bold mb-0 fs-2">Sign up for free</h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body p-5 pt-0">
+              <form class="">
+                <div class="form-floating mb-3">
+                  <input
+                    type="email"
+                    class="form-control rounded-3"
+                    id="floatingInput"
+                    placeholder="name@example.com"
+                  />
+                  <label for="floatingInput">Email address</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input
+                    type="password"
+                    class="form-control rounded-3"
+                    id="floatingPassword"
+                    placeholder="Password"
+                  />
+                  <label for="floatingPassword">Password</label>
+                </div>
+                <button
+                  class="w-100 mb-2 btn btn-lg rounded-3 btn-primary"
+                  type="submit"
+                >
+                  Sign up
+                </button>
+                <small class="text-muted"
+                  >By clicking Sign up, you agree to the terms of use.</small
+                >
+                <hr class="my-4" />
+                <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
+                <button
+                  class="w-100 py-2 mb-2 btn btn-outline-dark rounded-3"
+                  type="submit"
+                >
+                  <svg class="bi me-1" width="16" height="16">
+                    <use xlink:href="#twitter" />
+                  </svg>
+                  Sign up with Twitter
+                </button>
+                <button
+                  class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3"
+                  type="submit"
+                >
+                  <svg class="bi me-1" width="16" height="16">
+                    <use xlink:href="#facebook" />
+                  </svg>
+                  Sign up with Facebook
+                </button>
+                <button
+                  class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3"
+                  type="submit"
+                >
+                  <svg class="bi me-1" width="16" height="16">
+                    <use xlink:href="#github" />
+                  </svg>
+                  Sign up with GitHub
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- model end -->
+      <!-- 輪播區carousel開始 -->
+      <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#myCarousel"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#myCarousel"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#myCarousel"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="images\coffeesohp7dark.jpg"
+              class="figure-img img-fluid rounded"
+              alt="Coffee Shop"
+            />
+            <!-- <rect width="100%" height="100%" fill="#777" /> -->
+            <!--滾動視窗調顏色的地方-->
+            <div class="container">
+              <div class="carousel-caption text-start">
+                <h1>心動不如馬上行動!</h1>
+                <p>
+                  現在註冊會員，還可享有一系列優惠活動，今天就加入我們，一起享受咖啡所帶來的喜悅吧!
+                </p>
+                <p>
+                  <a class="btn btn-lg btn-primary" href="#">優惠活動</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="images\coffeeshop11dark.jpeg"
+              class="figure-img img-fluid rounded"
+              alt="Coffee Shop"
+            />
+            <!-- <rect width="100%" height="100%" fill="#777" /> -->
+            <!--滾動視窗調顏色的地方-->
+            <div class="container">
+              <div class="carousel-caption">
+                <h1>坐而言，不如起而行!</h1>
+                <p>
+                  如果只來匆匆去匆匆的瀏覽就太可惜了，趕快加入會員，才能享受完整的咖啡體驗!
+                </p>
+                <p><a class="btn btn-lg btn-primary" href="#">註冊會員</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="images\coffeesohp6dark.jpg"
+              class="figure-img img-fluid rounded"
+              alt="Coffee Shop"
+            />
+            <!-- <rect width="100%" height="100%" fill="#777" /> -->
+            <!--滾動視窗調顏色的地方-->
+            <div class="container">
+              <div class="carousel-caption text-end">
+                <h1>再忙，也要跟你喝杯咖啡!</h1>
+                <p>
+                  現代人步調繁忙、生活圈小，不僅沒時間交朋友，也沒時間慢慢品嘗咖啡，<br />既然如此，何不入內參觀，來場美麗的邂逅!
+                </p>
+                <p>
+                  <a class="btn btn-lg btn-primary" href="#">購物商城</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#myCarousel"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#myCarousel"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <!-- 輪播區carousel結束 -->
+      <!-- 三個圖區開始 -->
+      <div class="container marketing">
+        <div class="row">
+          <div class="col-lg-4">
+            <title>餐廳一</title>
+            <img
+              src="images\coffeesohp3.jpg"
+              class="figure-img img-fluid rounded"
+              alt="Mo Cafe"
+            />
+            <!-- <rect width="100%" height="100%" fill="#777" />
+              <text x="50%" y="50%" fill="#777" dy=".3em">140x140</text> -->
+            <h2 class="fw-normal">餐廳一: Mo Cafe</h2>
+            <p class="height-90">
+              Some representative placeholder content for the three columns of
+              text below the carousel. This is the first column.
+            </p>
+            <p>
+              <a class="btn btn-secondary" href="#">詳細介紹 &raquo;</a>
+            </p>
+          </div>
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <title>餐廳二</title>
+            <img
+              src="images\coffeesohp5.jpg"
+              class="figure-img img-fluid rounded"
+              alt="Coffee Shop"
+            />
+            <!-- <rect width="100%" height="100%" fill="#777" />
+              <text x="50%" y="50%" fill="#777" dy=".3em">140x140</text> -->
+            <h2 class="fw-normal">餐廳二: Kizuna 絆</h2>
+            <p class="height-90">
+              Another exciting bit of representative placeholder content. This
+              time, we've moved on to the second column.
+            </p>
+            <p>
+              <a class="btn btn-secondary" href="#">詳細介紹 &raquo;</a>
+            </p>
+          </div>
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <title>餐廳三</title>
+            <img
+              src="images\coffeesohp4.jpg"
+              class="figure-img img-fluid rounded"
+              alt="Coffee Shop"
+            />
+            <!-- <rect width="100%" height="100%" fill="#777" />
+              <text x="50%" y="50%" fill="#777" dy=".3em">140x140</text> -->
+            <h2 class="fw-normal">餐廳三: 旅人 Cafe</h2>
+            <p class="height-90">
+              And lastly this, the third column of representative placeholder
+              content.
+            </p>
+            <p>
+              <a class="btn btn-secondary" href="#">詳細介紹 &raquo;</a>
+            </p>
+          </div>
+        </div>
+        <!-- 三個圖區結束 -->
+        <hr class="featurette-divider" />
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading fw-normal lh-1">
+              體驗課程 :<br />
+              <span class="text-muted">一起享受咖啡帶來的樂趣!</span>
+            </h2>
+            <p class="lead">
+              Some great placeholder content for the first featurette here.
+              Imagine some exciting prose here.
+              <a class="btn btn-secondary" href="#">詳細介紹 &raquo;</a>
+            </p>
+          </div>
+          <div class="col-md-5">
+            <title>coffeecourse</title>
+            <img
+              src="images\CoffeeCourse_index.jpg"
+              class="figure-img img-fluid rounded"
+              alt="Coffee Shop"
+            />
+            <!-- <rect width="100%" height="100%" fill="#eee" />
+              <text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text> -->
+          </div>
+        </div>
+        <hr class="featurette-divider" />
+        <h1 class="text-center">獨樂樂，不如眾樂樂!</h1>
+        <p class="text-center">
+          歡迎一起加入論壇，來與世界各地的咖啡愛好者互相"切磋"、討論、分享你對咖啡的喜好!
+        </p>
+        <table class="table table-bordered text-center">
+          <thead>
+            <tr class="table-dark">
+              <th scope="col">文章分類</th>
+              <th scope="col">文章標題</th>
+              <th scope="col">人氣</th>
+              <th scope="col">發佈時間</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">關於選豆</th>
+              <td>賴比瑞亞相關提問</td>
+              <td>50</td>
+              <td>2023/1/2</td>
+            </tr>
+            <tr>
+              <th scope="row">關於優惠</th>
+              <td>關於優惠截止日期</td>
+              <td>20</td>
+              <td>2023/1/3</td>
+            </tr>
+            <tr>
+              <th scope="row">關於商城</th>
+              <td>關於商城的提問</td>
+              <td>6</td>
+              <td>2023/1/4</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="h_center">
+          <a class="btn btn-secondary" href="#">詳細介紹 &raquo;</a>
+        </p>
 
-
+        <hr class="featurette-divider" />
+        <!-- 表單 -->
+        <h1 class="text-center">咖啡小遊戲</h1>
+        <p class="text-center">
+          你夠認識你自己嗎?歡迎來玩一個你與咖啡豆之間的小遊戲!
+        </p>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-4">
+              <div id="list-example" class="list-group">
+                <a
+                  class="list-group-item list-group-item-action text-center"
+                  href="#list-item-1"
+                  >人格特質1</a
+                >
+                <a
+                  class="list-group-item list-group-item-action text-center"
+                  href="#list-item-2"
+                  >人格特質2</a
+                >
+                <a
+                  class="list-group-item list-group-item-action text-center"
+                  href="#list-item-3"
+                  >人格特質3</a
+                >
+                <a
+                  class="list-group-item list-group-item-action text-center"
+                  href="#list-item-4"
+                  >人格特質4</a
+                >
+                <br />
+                <p class="text-center">
+                  <a class="btn btn-secondary" href="#">詳細介紹 &raquo;</a>
+                </p>
+              </div>
+            </div>
+            <div class="col-8">
+              <div
+                data-bs-spy="scroll"
+                data-bs-target="#list-example"
+                data-bs-smooth-scroll="true"
+                class="scrollspy-example"
+                tabindex="0"
+              >
+                <h4 id="list-item-1 ">人格特質1</h4>
+                <p>
+                  This is some placeholder content for the scrollspy page. Note
+                  that as you scroll down the page, the appropriate navigation
+                  link is highlighted. It's repeated throughout the component
+                  example. We keep adding some more example copy here to
+                  emphasize the scrolling and highlighting.
+                </p>
+                <h4 id="list-item-2">人格特質2</h4>
+                <p>
+                  This is some placeholder content for the scrollspy page. Note
+                  that as you scroll down the page, the appropriate navigation
+                  link is highlighted. It's repeated throughout the component
+                  example. We keep adding some more example copy here to
+                  emphasize the scrolling and highlighting.
+                </p>
+                <h4 id="list-item-3">人格特質3</h4>
+                <p>
+                  This is some placeholder content for the scrollspy page. Note
+                  that as you scroll down the page, the appropriate navigation
+                  link is highlighted. It's repeated throughout the component
+                  example. We keep adding some more example copy here to
+                  emphasize the scrolling and highlighting.
+                </p>
+                <h4 id="list-item-4">人格特質4</h4>
+                <p>
+                  This is some placeholder content for the scrollspy page. Note
+                  that as you scroll down the page, the appropriate navigation
+                  link is highlighted. It's repeated throughout the component
+                  example. We keep adding some more example copy here to
+                  emphasize the scrolling and highlighting.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- footer -->
+			<div th:insert="/footer"></div>
 </body>
 </html>
