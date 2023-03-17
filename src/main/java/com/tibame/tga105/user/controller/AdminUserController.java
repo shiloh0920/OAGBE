@@ -141,5 +141,32 @@ public class AdminUserController {
 		return "user_admin_list";
 		
 	}
+	
+//	@GetMapping("/finduncertifyuser/{pageNo}")
+//	public String findUncertifyUsers(Model m, @PathVariable() int pageNo) {
+//		
+//		int pageSize = 3;
+//		Page<UserVO> page = userAdminService.findUncertifyUsers(pageNo, pageSize);
+//		List<UserVO> uservolist = page.getContent();
+//
+//		m.addAttribute("currentPage", pageNo);
+//		m.addAttribute("totalPages", page.getTotalPages());
+//		m.addAttribute("totalItems", page.getTotalElements());
+//		m.addAttribute("uservolist", uservolist);
+//
+//		return "user_admin_list";
+//
+//	}
+	
+	@GetMapping("/finduncertifyuser")
+	public String findUncertifyUsers(Model m) {
+		
+		List<UserVO> uservolist = userAdminService.findUncertifyUsers();
+
+		m.addAttribute("uservolist", uservolist);
+
+		return "user_admin_list";
+
+	}
 
 }

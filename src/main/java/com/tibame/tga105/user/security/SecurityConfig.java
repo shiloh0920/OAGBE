@@ -90,7 +90,7 @@ public class SecurityConfig {
 		      	  	.loginPage("/admin/user/login")
 		        	.usernameParameter("useremail")
 		        	.passwordParameter("userpassword")
-					.defaultSuccessUrl("/", true)
+					.defaultSuccessUrl("/admin/user/userlist/1", true)
 					.loginProcessingUrl("/admin/user/perfomlogin")
 					.failureUrl("/admin/user/login?error=true")
 					.permitAll()
