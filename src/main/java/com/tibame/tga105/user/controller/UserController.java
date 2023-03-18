@@ -352,11 +352,11 @@ public class UserController {
 			user.setUserstatusvo(userStatusService.findById(3));
 			userService.saveUser(user);
 			
-			return "redirect:/login?verify=success";
+			return "redirect:/?verify=success";
 			
 		} else {
 	
-			return "redirect:/login?verify=fail";
+			return "redirect:/?verify=fail";
 		}
 	}
 	
