@@ -362,7 +362,7 @@ session.setAttribute("uservo", uservo);
 		}
 	}
 	
-	@GetMapping("userpage/resendUserVerficationEmail")
+	@GetMapping("/userpage/resendUserVerficationEmail")
 	public String resendUserVerficationEmail(HttpServletRequest req, Model m) {
 
 		UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
